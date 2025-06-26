@@ -1,0 +1,101 @@
+@startuml "Quản lý Học viên - Xếp lớp và Tra cứu Lịch sử"
+title Quản lý Học viên - Xếp lớp và Tra cứu Lịch sử
+actor "<u>:Quản lý" as Manager
+
+' --- Định nghĩa các đối tượng ---
+boundary "<u>:Giao diện\n<u>Xếp lớp học viên" as StudentClassUI
+boundary "<u>:Giao diện\n<u>Lịch sử học viên" as HistoryUI
+control "<u>:Hệ thống\n<u>Xếp lớp học viên" as StudentSystem
+control "<u>:Hệ thống\n<u>Lịch sử học tập" as HistorySystem
+entity "<u>:Cơ sở dữ liệu" as Database
+
+' --- Bắt đầu luồng ---
+activate Manager
+
+' ========================================
+' Luồng: Xếp lớp cho học viên
+' ========================================
+== Xếp lớp cho học viên ==
+Manager -> StudentClassUI: Chọn "Xếp lớp cho học viên"
+activate StudentClassUI
+
+Manager -> StudentClassUI: Tìm kiếm học viên
+StudentClassUI -> StudentSystem: Yêu cầu thông tin học viên và các lớp phù hợp
+activate StudentSystem
+
+StudentSystem -> Database: Lấy thông tin HV và danh sách lớp
+activate Database
+Database --> StudentSystem: Trả về kết quả
+deactivate Database
+
+alt Tìm thấy học viên
+    StudentSystem --> StudentClassUI: Hiển thị thông tin học viên và các lớp gợi ý
+    
+    Manager -> StudentClassUI: Chọn lớp cho học viên
+    StudentClassUI -> StudentSystem: Gửi yêu cầu xếp lớp
+
+    StudentSystem -> Database: Kiểm tra điều kiện lớp (sĩ số, trình độ)
+    activate Database
+    Database --> StudentSystem: Trả về kết quả kiểm tra
+    deactivate Database
+
+    alt Lớp học phù hợp và còn chỗ
+        StudentSystem -> Database: Ghi danh học viên vào lớp
+        activate Database
+        alt Ghi danh thành công
+            Database --> StudentSystem: Xác nhận
+            deactivate Database
+            StudentSystem --> StudentClassUI: Thông báo "Xếp lớp thành công!"
+            StudentClassUI --> Manager: Thông báo "Xếp lớp thành công!"
+        else Lỗi ghi danh
+            Database --> StudentSystem: Báo lỗi CSDL
+            StudentSystem --> StudentClassUI: Thông báo "Lỗi hệ thống, không thể ghi danh."
+            StudentClassUI --> Manager: Thông báo "Lỗi hệ thống, không thể ghi danh."
+        end
+    else Lớp không phù hợp
+        StudentSystem --> StudentClassUI: Thông báo "Lớp đã đầy hoặc\nkhông phù hợp trình độ."
+        StudentClassUI --> Manager: Thông báo "Lớp đã đầy hoặc\nkhông phù hợp trình độ."
+    end
+else Không tìm thấy học viên
+    StudentSystem --> StudentClassUI: Thông báo "Không tìm thấy học viên\nvới thông tin đã nhập."
+    deactivate StudentSystem
+    StudentClassUI --> Manager: Thông báo "Không tìm thấy học viên\nvới thông tin đã nhập."
+    deactivate StudentClassUI
+end
+
+' ========================================
+' Luồng: Xem lịch sử học viên
+' ========================================
+== Tra cứu lịch sử học tập của học viên ==
+Manager -> HistoryUI: Truy cập "Lịch sử học viên"
+activate HistoryUI
+
+Manager -> HistoryUI: Tìm kiếm và chọn một học viên
+HistoryUI -> HistorySystem: Yêu cầu lịch sử học tập của học viên đã chọn
+activate HistorySystem
+
+HistorySystem -> Database: Truy vấn thông tin và \nlịch sử học tập của HV
+activate Database
+Database --> HistorySystem: Trả về kết quả
+deactivate Database
+
+alt Tìm thấy học viên
+    alt Học viên có lịch sử học tập (điểm, chuyên cần, các lớp đã học)
+        HistorySystem --> HistoryUI: Hiển thị chi tiết lịch sử học tập
+        HistoryUI --> Manager: Hiển thị chi tiết lịch sử học tập
+    else Học viên chưa có lịch sử học tập
+        HistorySystem --> HistoryUI: Hiển thị thông tin cơ bản và thông báo\n "Học viên chưa có lịch sử học tập."
+        HistoryUI --> Manager: Hiển thị thông tin cơ bản và thông báo\n "Học viên chưa có lịch sử học tập."
+    end
+else Không tìm thấy học viên
+    HistorySystem --> HistoryUI: Thông báo "Không tìm thấy học viên."
+    deactivate HistorySystem
+    HistoryUI --> Manager: Thông báo "Không tìm thấy học viên."
+    deactivate HistoryUI
+
+end
+
+
+deactivate Manager
+
+@enduml

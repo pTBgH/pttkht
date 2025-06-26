@@ -1,0 +1,219 @@
+@startuml
+title Sơ đồ tuần tự - Quản lý thông tin và danh mục
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Quản lý" as Admin
+boundary "<u>:Giao diện\n<u>Quản lý" as UI
+control "<u>:Hệ thống\n<u>Quản lý danh mục" as CategorySystem
+control "<u>:Hệ thống\n<u>Xác thực" as ValidationService
+entity "<u>:Cơ sở dữ liệu" as DB
+
+== Khởi tạo và chọn danh mục ==
+activate Admin
+Admin -> UI: Chọn chức năng (VD: "Danh sách khóa học")
+activate UI
+UI -> CategorySystem: Yêu cầu hiển thị danh mục đã chọn
+activate CategorySystem
+CategorySystem -> DB: Truy vấn danh sách theo loại danh mục
+activate DB
+DB --> CategorySystem: Trả về danh sách
+deactivate DB
+CategorySystem --> UI: Hiển thị danh sách với thông tin chi tiết
+deactivate CategorySystem
+UI --> Admin: Hiển thị giao diện danh mục
+deactivate UI
+
+== Thêm mới đối tượng ==
+Admin -> UI: Chọn "Thêm mới"
+activate UI
+UI --> Admin: Hiển thị form nhập thông tin mới
+Admin -> UI: Nhập thông tin đối tượng mới
+UI -> CategorySystem: Gửi yêu cầu tạo mới
+activate CategorySystem
+CategorySystem -> ValidationService: Xác thực thông tin
+activate ValidationService
+
+alt Thông tin hợp lệ
+    ValidationService --> CategorySystem: Xác nhận hợp lệ
+    deactivate ValidationService
+    CategorySystem -> DB: Kiểm tra ràng buộc dữ liệu
+    activate DB
+    DB --> CategorySystem: Phản hồi kiểm tra
+    deactivate DB
+    
+    alt Không có xung đột
+        CategorySystem -> DB: Lưu đối tượng mới
+        activate DB
+        DB --> CategorySystem: Xác nhận lưu thành công
+        deactivate DB
+        CategorySystem --> UI: Thông báo tạo thành công
+        UI --> Admin: Hiển thị thông báo thành công
+    else Có xung đột dữ liệu
+        CategorySystem --> UI: Thông báo lỗi xung đột
+        UI --> Admin: Hiển thị lỗi và yêu cầu điều chỉnh
+    end
+else Thông tin không hợp lệ
+    ValidationService --> CategorySystem: Thông báo lỗi xác thực
+    deactivate ValidationService
+    CategorySystem --> UI: Thông báo lỗi
+    deactivate CategorySystem
+    UI --> Admin: Hiển thị cảnh báo và yêu cầu nhập lại
+    deactivate UI
+end
+
+== Chỉnh sửa đối tượng ==
+Admin -> UI: Chọn đối tượng từ danh sách
+activate UI
+Admin -> UI: Chọn "Chỉnh sửa"
+UI -> CategorySystem: Yêu cầu thông tin chi tiết
+activate CategorySystem
+CategorySystem -> DB: Truy vấn thông tin đối tượng
+activate DB
+DB --> CategorySystem: Trả về thông tin
+deactivate DB
+CategorySystem --> UI: Hiển thị form chỉnh sửa với dữ liệu hiện tại
+deactivate CategorySystem
+UI --> Admin: Hiển thị form chỉnh sửa
+
+Admin -> UI: Thay đổi thông tin
+UI -> CategorySystem: Gửi yêu cầu cập nhật
+activate CategorySystem
+CategorySystem -> ValidationService: Xác thực thông tin mới
+activate ValidationService
+
+alt Thông tin hợp lệ
+    ValidationService --> CategorySystem: Xác nhận hợp lệ
+    deactivate ValidationService
+    CategorySystem -> DB: Cập nhật thông tin
+    activate DB
+    DB --> CategorySystem: Xác nhận cập nhật thành công
+    deactivate DB
+    CategorySystem --> UI: Thông báo cập nhật thành công
+    UI --> Admin: Hiển thị thông báo thành công
+else Thông tin không hợp lệ
+    ValidationService --> CategorySystem: Thông báo lỗi xác thực
+    deactivate ValidationService
+    CategorySystem --> UI: Thông báo lỗi
+    deactivate CategorySystem
+    UI --> Admin: Hiển thị cảnh báo và yêu cầu điều chỉnh
+    deactivate UI
+end
+
+
+== Xóa đối tượng ==
+Admin -> UI: Chọn đối tượng từ danh sách
+activate UI
+Admin -> UI: Chọn "Xóa"
+UI -> CategorySystem: Kiểm tra khả năng xóa
+activate CategorySystem
+CategorySystem -> DB: Kiểm tra ràng buộc và sử dụng
+activate DB
+DB --> CategorySystem: Phản hồi kết quả kiểm tra
+deactivate DB
+
+alt Có thể xóa
+    CategorySystem --> UI: Cho phép xóa
+    UI --> Admin: Hiển thị hộp thoại xác nhận xóa
+
+    ' Bắt đầu khối lựa chọn: xác nhận hoặc không
+    alt Xác nhận xóa
+        Admin -> UI: Xác nhận xóa
+        UI -> CategorySystem: Gửi yêu cầu xóa
+        CategorySystem -> DB: Xóa đối tượng
+        activate DB
+        DB --> CategorySystem: Xác nhận xóa thành công
+        deactivate DB
+        CategorySystem --> UI: Thông báo xóa thành công
+        UI --> Admin: Hiển thị thông báo thành công
+    else Không xác nhận xóa
+        Admin -> UI: Không xác nhận (chọn "Hủy")
+        UI --> Admin: Đóng hộp thoại xác nhận
+    end
+else Đối tượng đang được sử dụng
+    CategorySystem --> UI: Cảnh báo không thể xóa
+    deactivate CategorySystem
+    UI --> Admin: Hiển thị cảnh báo và yêu cầu xử lý trước
+    deactivate UI
+end
+
+== Tạo lớp học (trường hợp đặc biệt) ==
+Admin -> UI: Chọn "Tạo lớp mới"
+activate UI
+UI -> CategorySystem: Yêu cầu form tạo lớp
+activate CategorySystem
+CategorySystem -> DB: Truy vấn dữ liệu liên quan\n(khóa học, chi nhánh, phòng, giáo viên)
+activate DB
+DB --> CategorySystem: Trả về danh sách tùy chọn
+deactivate DB
+CategorySystem --> UI: Hiển thị form với các tùy chọn
+deactivate CategorySystem
+UI --> Admin: Hiển thị form tạo lớp
+
+Admin -> UI: Chọn khóa học, chi nhánh,\nthời gian, giáo viên, phòng học
+UI -> CategorySystem: Gửi yêu cầu tạo lớp
+activate CategorySystem
+CategorySystem -> ValidationService: Xác thực thông tin lớp học
+activate ValidationService
+
+alt Thông tin hợp lệ (ngày, phòng trống, giáo viên rảnh)
+    ValidationService --> CategorySystem: Xác nhận hợp lệ
+    deactivate ValidationService
+    CategorySystem -> DB: Lưu thông tin lớp học mới
+    activate DB
+    DB --> CategorySystem: Xác nhận lưu thành công
+    deactivate DB
+    CategorySystem --> UI: Thông báo tạo lớp thành công
+    UI --> Admin: Hiển thị thông báo thành công
+else Thông tin không hợp lệ
+    ValidationService --> CategorySystem: Thông báo lỗi
+    deactivate ValidationService
+    CategorySystem --> UI: Thông báo lỗi xác thực
+    deactivate CategorySystem
+    UI --> Admin: Hiển thị lỗi và yêu cầu điều chỉnh
+    deactivate UI
+end
+
+
+
+== Quản lý chuyên đề/bài tập chung ==
+Admin -> UI: Chọn "Quản lý chuyên đề" hoặc "Quản lý bài tập"
+activate UI
+UI -> CategorySystem: Yêu cầu danh sách chuyên đề/bài tập
+activate CategorySystem
+CategorySystem -> DB: Truy vấn danh sách
+activate DB
+DB --> CategorySystem: Trả về danh sách
+deactivate DB
+CategorySystem --> UI: Hiển thị danh sách
+deactivate CategorySystem
+UI --> Admin: Hiển thị giao diện quản lý
+
+Admin -> UI: Bổ sung/cập nhật tiêu đề chuyên đề hoặc chủ đề bài tập
+UI -> CategorySystem: Gửi yêu cầu cập nhật
+activate CategorySystem
+CategorySystem -> DB: Cập nhật thông tin chuyên đề/bài tập
+activate DB
+DB --> CategorySystem: Xác nhận cập nhật thành công
+deactivate DB
+CategorySystem --> UI: Thông báo cập nhật thành công
+deactivate CategorySystem
+UI --> Admin: Hiển thị thông báo thành công
+deactivate UI
+
+== Cập nhật danh sách ==
+CategorySystem -> DB: Truy vấn danh sách cập nhật
+activate CategorySystem
+activate DB
+DB --> CategorySystem: Trả về danh sách mới nhất
+deactivate DB
+CategorySystem --> UI: Cập nhật hiển thị
+deactivate CategorySystem
+activate UI
+
+UI --> Admin: Hiển thị danh sách đã cập nhật
+deactivate UI
+deactivate Admin
+
+@enduml

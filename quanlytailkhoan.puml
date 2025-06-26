@@ -1,0 +1,173 @@
+@startuml
+title Sơ đồ tuần tự - Quản lý tài khoản
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Quản lý" as Admin
+boundary "<u>:Giao diện\n<u>Quản lý" as UI
+control "<u>:Hệ thống\n<u>Quản lý tài khoản" as AccountSystem
+entity "<u>:Cơ sở dữ liệu" as DB
+
+== Khởi tạo ==
+activate Admin
+Admin -> UI: Đăng nhập thành công
+activate UI
+Admin -> UI: Chọn "Quản lý tài khoản"
+UI -> AccountSystem: Yêu cầu hiển thị danh sách tài khoản
+activate AccountSystem
+AccountSystem -> DB: Truy vấn danh sách người dùng
+activate DB
+DB --> AccountSystem: Trả về danh sách
+deactivate DB
+AccountSystem --> UI: Hiển thị danh sách người dùng
+deactivate AccountSystem
+UI --> Admin: Hiển thị giao diện quản lý tài khoản
+deactivate UI
+
+== Tạo tài khoản mới ==
+Admin -> UI: Chọn "Tạo tài khoản mới"
+activate UI
+UI --> Admin: Hiển thị form tạo tài khoản
+Admin -> UI: Nhập thông tin (tên, vai trò, email, mật khẩu)
+UI -> AccountSystem: Gửi yêu cầu tạo tài khoản
+activate AccountSystem
+
+alt Thông tin hợp lệ
+    AccountSystem -> DB: Kiểm tra email có trùng không
+    activate DB
+    DB --> AccountSystem: Phản hồi kết quả kiểm tra
+    deactivate DB
+    
+    alt Email không trùng
+        AccountSystem -> DB: Lưu tài khoản mới
+        activate DB
+        DB --> AccountSystem: Xác nhận lưu thành công
+        deactivate DB
+        AccountSystem --> UI: Thông báo tạo thành công
+        UI --> Admin: Hiển thị thông báo thành công
+    else Email đã tồn tại
+        AccountSystem --> UI: Thông báo email đã tồn tại
+        UI --> Admin: Hiển thị lỗi email trùng
+    end
+else Thông tin không hợp lệ
+    AccountSystem --> UI: Thông báo lỗi thiếu thông tin
+    deactivate AccountSystem
+    UI --> Admin: Hiển thị cảnh báo và yêu cầu nhập lại
+    deactivate UI
+end
+
+
+
+
+== Chỉnh sửa tài khoản ==
+Admin -> UI: Chọn tài khoản từ danh sách
+activate UI
+Admin -> UI: Chọn "Chỉnh sửa"
+UI -> AccountSystem: Yêu cầu thông tin chi tiết tài khoản
+activate AccountSystem
+AccountSystem -> DB: Truy vấn thông tin tài khoản
+activate DB
+DB --> AccountSystem: Trả về thông tin
+deactivate DB
+AccountSystem --> UI: Hiển thị form chỉnh sửa với thông tin hiện tại
+deactivate AccountSystem
+UI --> Admin: Hiển thị form chỉnh sửa
+
+Admin -> UI: Thay đổi thông tin
+UI -> AccountSystem: Gửi yêu cầu cập nhật
+activate AccountSystem
+
+alt Thông tin hợp lệ
+    AccountSystem -> DB: Cập nhật thông tin tài khoản
+    activate DB
+    DB --> AccountSystem: Xác nhận cập nhật thành công
+    deactivate DB
+    AccountSystem --> UI: Thông báo cập nhật thành công
+    UI --> Admin: Hiển thị thông báo thành công
+else Thông tin không hợp lệ
+    AccountSystem --> UI: Thông báo lỗi
+    deactivate AccountSystem
+    UI --> Admin: Hiển thị cảnh báo và yêu cầu nhập lại
+    deactivate UI
+end
+
+== Xóa tài khoản ==
+Admin -> UI: Chọn tài khoản từ danh sách
+activate UI
+Admin -> UI: Chọn "Xóa"
+UI --> Admin: Hiển thị hộp thoại xác nhận xóa
+alt Xác nhận xóa
+    Admin -> UI: Xác nhận xóa
+    UI -> AccountSystem: Gửi yêu cầu xóa tài khoản
+    activate AccountSystem
+    AccountSystem -> DB: Xóa tài khoản
+    activate DB
+    DB --> AccountSystem: Xác nhận xóa thành công
+    deactivate DB
+    AccountSystem --> UI: Thông báo xóa thành công
+    deactivate AccountSystem
+    UI --> Admin: Hiển thị thông báo thành công
+
+else Không xác nhận xóa
+    Admin -> UI: Không xác nhận (chọn "Hủy")
+    UI --> Admin: Đóng hộp thoại xác nhận
+    deactivate UI
+end
+
+== Phân quyền tài khoản ==
+Admin -> UI: Chọn tài khoản từ danh sách
+activate UI
+Admin -> UI: Chọn "Phân quyền"
+UI -> AccountSystem: Yêu cầu thực hiện phân quyền
+activate AccountSystem
+
+' Thêm ghi chú giải thích việc kiểm tra quyền
+note right of AccountSystem
+  Hệ thống kiểm tra xem Admin
+  có quyền "Quản lý & Phân quyền" hay không
+  trước khi xử lý yêu cầu.
+end note
+
+' Bắt đầu khối kiểm tra quyền
+alt Admin có quyền phân quyền
+    AccountSystem -> DB: Truy vấn quyền hiện tại của tài khoản
+    activate DB
+    DB --> AccountSystem: Trả về thông tin quyền
+    deactivate DB
+    AccountSystem --> UI: Gửi dữ liệu để hiển thị giao diện phân quyền
+    UI --> Admin: Hiển thị form phân quyền với thông tin hiện tại
+
+    Admin -> UI: Đặt vai trò và quyền mới
+    UI -> AccountSystem: Gửi yêu cầu cập nhật quyền
+    activate AccountSystem
+    AccountSystem -> DB: Cập nhật quyền cho tài khoản
+    activate DB
+    DB --> AccountSystem: Xác nhận cập nhật thành công
+    deactivate DB
+    AccountSystem --> UI: Thông báo phân quyền thành công
+    deactivate AccountSystem
+    UI --> Admin: Hiển thị thông báo thành công
+
+else Admin không có quyền phân quyền
+    AccountSystem --> UI: Trả về lỗi "Không có quyền thực hiện"
+    deactivate AccountSystem
+    UI --> Admin: Hiển thị thông báo lỗi
+    deactivate UI
+end
+
+
+== Cập nhật danh sách ==
+AccountSystem -> DB: Truy vấn danh sách tài khoản mới nhất
+activate AccountSystem
+activate DB
+DB --> AccountSystem: Trả về danh sách cập nhật
+deactivate DB
+AccountSystem --> UI: Cập nhật danh sách hiển thị
+deactivate AccountSystem
+activate UI
+UI --> Admin: Hiển thị danh sách tài khoản đã cập nhật
+deactivate UI
+deactivate Admin
+
+@enduml

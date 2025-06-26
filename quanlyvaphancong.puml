@@ -1,0 +1,66 @@
+@startuml "Quản lý Giảng viên - Phân công giảng dạy"
+
+actor "<u>:Quản lý" as Manager
+
+' --- Định nghĩa các đối tượng ---
+boundary "<u>:Giao diện\n<u>Phân công giảng dạy" as TeachingUI
+control "<u>:Hệ thống\n<u>Phân công giảng viên" as TeachingSystem
+entity "<u>:Cơ sở dữ liệu" as Database
+
+' --- Bắt đầu luồng ---
+activate Manager
+
+' ========================================
+' Luồng: Phân công giảng dạy
+' ========================================
+== Phân công giảng dạy ==
+Manager -> TeachingUI: Chọn "Phân công giảng dạy"
+activate TeachingUI
+
+TeachingUI -> TeachingSystem: Yêu cầu danh sách lớp cần phân công
+activate TeachingSystem
+
+TeachingSystem -> Database: Truy vấn lớp chưa có GV
+activate Database
+Database --> TeachingSystem: Trả về danh sách lớp
+deactivate Database
+
+alt Có lớp cần phân công
+    TeachingSystem --> TeachingUI: Hiển thị danh sách lớp
+    
+    Manager -> TeachingUI: Chọn lớp, chọn giáo viên để phân công
+    TeachingUI -> TeachingSystem: Gửi yêu cầu phân công
+
+    TeachingSystem -> Database: Kiểm tra lịch dạy của GV
+    activate Database
+    Database --> TeachingSystem: Trả về kết quả kiểm tra
+    deactivate Database
+
+    alt Lịch dạy của giáo viên không bị trùng
+        TeachingSystem -> Database: Lưu thông tin phân công
+        activate Database
+        alt Lưu thành công
+            Database --> TeachingSystem: Xác nhận lưu
+            TeachingSystem --> TeachingUI: Thông báo "Phân công thành công!"
+            TeachingUI --> Manager: Thông báo "Phân công thành công!"
+        else Lỗi khi lưu
+            Database --> TeachingSystem: Báo lỗi CSDL
+            deactivate Database
+            TeachingSystem --> TeachingUI: Thông báo "Lỗi hệ thống, không thể lưu."
+            TeachingUI --> Manager: Thông báo "Lỗi hệ thống, không thể lưu."
+        end
+    else Lịch dạy của giáo viên bị trùng
+        TeachingSystem --> TeachingUI: Cảnh báo "Lịch giáo viên bị trùng!"
+        TeachingUI --> Manager: Cảnh báo "Lịch giáo viên bị trùng!"
+    end
+
+else Không có lớp nào cần phân công
+    TeachingSystem --> TeachingUI: Thông báo "Không có lớp nào cần phân công."
+    deactivate TeachingSystem
+    TeachingUI --> Manager: Thông báo "Không có lớp nào cần phân công."
+    deactivate TeachingUI
+end
+
+deactivate Manager
+
+@enduml

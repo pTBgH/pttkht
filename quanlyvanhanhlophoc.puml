@@ -1,0 +1,85 @@
+@startuml "Quyền và Thời khóa biểu"
+title Sơ đồ tuần tự - Quyền và Thời khóa biểu
+actor "<u>:Quản lý" as Manager
+
+' --- Định nghĩa các đối tượng ---
+boundary "<u>:Giao diện\n<u>Quản lý điểm danh" as AttendanceUI
+boundary "<u>:Giao diện\n<u>Thời khóa biểu" as ScheduleUI
+control "<u>:Hệ thống\n<u>Quản lý quyền hạn" as PermissionSystem
+control "<u>:Hệ thống\n<u>Thời khóa biểu" as ScheduleSystem
+entity "<u>:Cơ sở dữ liệu" as Database
+
+' --- Bắt đầu luồng ---
+activate Manager
+
+' ========================================
+' Luồng: Quản lý quyền điểm danh
+' ========================================
+== Cấp quyền điểm danh cho giáo viên ==
+Manager -> AttendanceUI: Vào "Quản lý quyền điểm danh"
+activate AttendanceUI
+
+Manager -> AttendanceUI: Chọn giáo viên và \nlớp học để cấp quyền
+AttendanceUI -> PermissionSystem: Gửi yêu cầu cấp quyền
+activate PermissionSystem
+
+PermissionSystem -> Database: Kiểm tra giáo viên và lớp học có hợp lệ không
+activate Database
+Database --> PermissionSystem: Trả về kết quả
+deactivate Database
+
+alt Giáo viên và Lớp học hợp lệ
+    PermissionSystem -> Database: Lưu quyền điểm danh
+    activate Database
+    alt Lưu thành công
+        Database --> PermissionSystem: Xác nhận
+        PermissionSystem --> AttendanceUI: Thông báo "Cấp quyền thành công!"
+        AttendanceUI --> Manager: Thông báo "Cấp quyền thành công!"
+    else Quyền đã tồn tại
+        Database --> PermissionSystem: Thông báo quyền đã có
+        PermissionSystem --> AttendanceUI: Thông báo "Giáo viên đã có quyền\nđiểm danh cho lớp này."
+        AttendanceUI --> Manager: Thông báo "Giáo viên đã có quyền\nđiểm danh cho lớp này."    
+    else Lỗi CSDL
+        Database --> PermissionSystem: Báo lỗi
+        deactivate Database
+        PermissionSystem --> AttendanceUI: Thông báo "Lỗi hệ thống, không thể lưu."
+        AttendanceUI --> Manager: Thông báo "Lỗi hệ thống, không thể lưu."    
+    end
+
+else Giáo viên hoặc Lớp học không hợp lệ
+    PermissionSystem --> AttendanceUI: Thông báo "Thông tin giáo viên hoặc\nlớp học không chính xác."
+    deactivate PermissionSystem
+    AttendanceUI --> Manager: Thông báo "Thông tin giáo viên hoặc\nlớp học không chính xác."
+    deactivate AttendanceUI
+end
+
+
+' ========================================
+' Luồng: Xem thời khóa biểu tổng thể
+' ========================================
+== Xem thời khóa biểu tổng thể ==
+Manager -> ScheduleUI: Chọn "Thời khóa biểu tổng thể"
+activate ScheduleUI
+
+Manager -> ScheduleUI: Chọn tuần/tháng để xem
+ScheduleUI -> ScheduleSystem: Yêu cầu dữ liệu thời khóa biểu
+activate ScheduleSystem
+
+ScheduleSystem -> Database: Truy vấn thời khóa biểu\ntheo thời gian
+activate Database
+Database --> ScheduleSystem: Trả về dữ liệu
+deactivate Database
+
+alt Có dữ liệu thời khóa biểu
+    ScheduleSystem --> ScheduleUI: Hiển thị thời khóa biểu dưới dạng bảng/lịch
+    ScheduleUI --> Manager: Hiển thị thời khóa 
+else Không có dữ liệu
+    ScheduleSystem --> ScheduleUI: Thông báo "Không có lịch học nào \ntrong khoảng thời gian đã chọn."
+    deactivate ScheduleSystem
+    ScheduleUI --> Manager: Thông báo "Không có lịch học nào \ntrong khoảng thời gian đã chọn."
+    deactivate ScheduleUI
+end
+
+deactivate Manager
+
+@enduml
