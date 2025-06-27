@@ -1,0 +1,68 @@
+@startuml
+' File: 2_Gui_ThongBao.puml
+title Gửi Thông báo chung
+
+actor "<u>:Quản lý" as Admin
+boundary "<u>:Giao diện\n<u>Hệ thống" as UI
+control "<u>:Hệ thống\n<u>Thông báo" as NotificationSystem
+control "<u>:Hệ thống\n<u>Báo cáo" as ReportSystem
+entity "<u>:Cơ sở dữ liệu" as Database
+
+autonumber stop
+== Báo cáo chuyên cần ==
+Admin -> UI : Yêu cầu xem Báo cáo Chuyên cần\nvà chọn tiêu chí
+activate UI
+
+UI -> ReportSystem : Yêu cầu báo cáo chuyên cần(tiêu chí)
+activate ReportSystem
+ReportSystem -> Database : Truy vấn dữ liệu chuyên cần
+activate Database
+Database --> ReportSystem : Trả về dữ liệu chuyên cần
+deactivate Database
+
+alt Dữ liệu chuyên cần tồn tại
+    ReportSystem -> ReportSystem : Thống kê số buổi vắng/đủ
+    ReportSystem --> UI : Trả về báo cáo chuyên cần đã xử lý
+    UI --> Admin : Hiển thị báo cáo chuyên cần
+
+else Không có dữ liệu
+    ReportSystem --> UI : Báo lỗi "Không có dữ liệu để hiển thị"
+    deactivate ReportSystem
+    UI --> Admin : Hiển thị thông báo lỗi
+    deactivate UI
+end
+
+
+== Gửi thông báo chung ==
+Admin -> UI : Soạn nội dung, chọn đối tượng\nvà yêu cầu gửi thông báo
+activate UI
+
+UI -> NotificationSystem : Yêu cầu gửi thông báo\n(nội dung, đối tượng)
+activate NotificationSystem
+
+NotificationSystem -> Database : Lấy thông tin liên hệ của người nhận
+activate Database
+Database --> NotificationSystem : Trả về danh sách người nhận
+deactivate Database
+
+alt Gửi thông báo thành công
+    NotificationSystem -> NotificationSystem : Gửi tin nhắn/email đến người nhận
+    note right: Gửi thông qua một dịch vụ\nEmail Gateway
+    
+    NotificationSystem -> Database : Lưu lại lịch sử thông báo
+    activate Database
+    Database --> NotificationSystem : Xác nhận đã lưu
+    deactivate Database
+
+    NotificationSystem --> UI : Báo kết quả "Gửi thành công"
+    UI --> Admin : Hiển thị thông báo "Đã gửi thành công"
+
+else Lỗi kết nối khi gửi
+    NotificationSystem --> UI : Báo lỗi "Gửi thất bại, vui lòng thử lại"
+    note right: Lỗi xảy ra trong quá trình gọi dịch vụ gửi tin
+    deactivate NotificationSystem
+    UI --> Admin : Hiển thị thông báo lỗi và đề nghị thử lại
+    deactivate UI
+end
+
+@enduml

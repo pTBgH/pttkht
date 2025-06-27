@@ -1,0 +1,76 @@
+@startuml
+' File: 1_BaoCao_ThongKe.puml
+title Báo cáo và Thống kê
+
+actor "<u>:Quản lý" as Admin
+boundary "<u>:Giao diện\n<u>Hệ thống" as UI
+control "<u>:Hệ thống\n<u>Báo cáo" as ReportSystem
+control "<u>:Hệ thống\n<u>Thống kê" as StatSystem
+control "<u>:Hệ thống\n<u>Xuất file" as ExportSystem
+entity "<u>:Cơ sở dữ liệu" as Database
+
+autonumber stop
+
+== Báo cáo điểm số ==
+Admin -> UI : Yêu cầu xem Báo cáo Điểm số và chọn tiêu chí (lớp/cá nhân)
+activate UI
+
+UI -> ReportSystem : Yêu cầu tổng hợp điểm số(tiêu chí)
+activate ReportSystem
+ReportSystem -> Database : Truy vấn dữ liệu điểm số
+activate Database
+Database --> ReportSystem : Trả về dữ liệu điểm số
+deactivate Database
+
+alt Dữ liệu điểm số tồn tại
+    ReportSystem -> ReportSystem : Tổng hợp và tính toán thống kê
+    ReportSystem --> UI : Trả về dữ liệu báo cáo đã xử lý
+    UI --> Admin : Hiển thị báo cáo điểm số và tùy chọn xuất file
+    
+    opt Người dùng chọn xuất file
+        Admin -> UI : Yêu cầu xuất file (Excel/PDF)
+        UI -> ExportSystem : Yêu cầu tạo file báo cáo(dữ liệu)
+        activate ExportSystem
+        ExportSystem --> Admin : Trả về file báo cáo để tải xuống
+        deactivate ExportSystem
+    end
+
+else Không có dữ liệu
+    ReportSystem --> UI : Báo lỗi "Không có dữ liệu để hiển thị"
+    UI --> Admin : Hiển thị thông báo lỗi
+end
+deactivate ReportSystem
+deactivate UI
+
+== Thống kê bài tập ==
+Admin -> UI : Yêu cầu xem Thống kê Bài tập
+activate UI
+
+UI -> StatSystem : Yêu cầu thống kê hoàn thành bài tập
+activate StatSystem
+StatSystem -> Database : Truy vấn dữ liệu hoàn thành bài tập
+activate Database
+Database --> StatSystem : Trả về dữ liệu bài tập
+deactivate Database
+
+alt Dữ liệu bài tập tồn tại
+    StatSystem -> StatSystem : Tính toán tỷ lệ hoàn thành
+    StatSystem --> UI : Trả về kết quả thống kê
+    UI --> Admin : Hiển thị thống kê và tùy chọn xuất báo cáo
+    
+    opt Người dùng chọn xuất báo cáo chi tiết
+        Admin -> UI : Yêu cầu xuất file báo cáo chi tiết
+        UI -> ExportSystem : Yêu cầu tạo file báo cáo(dữ liệu)
+        activate ExportSystem
+        ExportSystem --> Admin : Trả về file báo cáo để tải xuống
+        deactivate ExportSystem
+    end
+
+else Không có dữ liệu
+    StatSystem --> UI : Báo lỗi "Không có dữ liệu để hiển thị"
+    UI --> Admin : Hiển thị thông báo lỗi
+end
+deactivate StatSystem
+deactivate UI
+
+@enduml
