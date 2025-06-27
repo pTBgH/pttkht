@@ -80,7 +80,7 @@ Database --> HistorySystem: Trả về kết quả
 deactivate Database
 
 alt Tìm thấy học viên
-    alt Học viên có lịch sử học tập (điểm, chuyên cần, các lớp đã học)
+    alt Học viên có lịch sử học tập (chuyên cần, các lớp đã học)
         HistorySystem --> HistoryUI: Hiển thị chi tiết lịch sử học tập
         HistoryUI --> Manager: Hiển thị chi tiết lịch sử học tập
     else Học viên chưa có lịch sử học tập
