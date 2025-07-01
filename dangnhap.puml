@@ -1,0 +1,55 @@
+@startuml "Sơ đồ hoạt động - Quá trình Đăng nhập"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Quá trình Đăng nhập
+
+|Người dùng|
+start;
+:Truy cập trang\nđăng nhập;
+:Nhập tên đăng nhập\nvà mật khẩu;
+
+|Hệ thống|
+:Tìm kiếm tài khoản\ntrong cơ sở dữ liệu;
+  
+if (Tài khoản\ntồn tại?) then (có)
+  :Kiểm tra mật khẩu;
+  
+  if (Mật khẩu\nđúng?) then (có)
+    :Cập nhật thời gian\nđăng nhập cuối;
+    :Tạo phiên đăng nhập;
+    :Tạo token xác thực;
+    
+    |Người dùng|
+    :Chuyển hướng\nđến trang chủ;
+    :Hiển thị thông báo\nđăng nhập thành công;
+    
+  else (sai)
+    |Hệ thống|
+    :Ghi log thất bại;
+    |Người dùng|
+    :Hiển thị thông báo\nmật khẩu sai;
+    :Quay lại form\nđăng nhập;
+  endif
+  
+else (không)
+  |Hệ thống|
+  :Ghi log thất bại;
+  |Người dùng|
+  :Hiển thị thông báo\ntài khoản không tồn tại;
+  -> \n\n;
+  :Quay lại form\nđăng nhập;
+endif
+
+stop
+
+@enduml
