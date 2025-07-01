@@ -1,0 +1,62 @@
+@startuml
+title Sơ đồ tuần tự - Báo cáo và theo dõi
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Giảng viên" as Teacher
+boundary "<u>:Giao diện\n<u>Giảng viên" as UI
+control "<u>:Hệ thống\n<u>Báo cáo" as ReportSystem
+control "<u>:Hệ thống\n<u>Thống kê" as StatisticsSystem
+entity "<u>:Cơ sở dữ liệu" as StudyDB
+
+activate Teacher
+Teacher -> UI: Chọn "Báo cáo lớp học"
+activate UI
+UI -> ReportSystem: Yêu cầu tạo báo cáo lớp
+activate ReportSystem
+ReportSystem -> StudyDB: Lấy dữ liệu điểm số, nộp bài, chuyên cần
+activate StudyDB
+
+alt Có dữ liệu
+    StudyDB --> ReportSystem: Trả về dữ liệu học tập
+    deactivate StudyDB
+    ReportSystem -> StatisticsSystem: Tính toán thống kê
+    activate StatisticsSystem
+    StatisticsSystem --> ReportSystem: Trả về kết quả thống kê
+    deactivate StatisticsSystem
+    ReportSystem --> UI: Hiển thị báo cáo tổng hợp
+    deactivate ReportSystem
+    UI --> Teacher: Hiển thị báo cáo (bảng và biểu đồ)
+else Chưa có dữ liệu
+    StudyDB --> ReportSystem: Không có dữ liệu
+    deactivate StudyDB
+    ReportSystem --> UI: Thông báo "Chưa có dữ liệu"
+    deactivate ReportSystem
+    UI --> Teacher: Hiển thị thông báo chưa có dữ liệu
+end
+
+Teacher -> UI: Chọn xem chi tiết học viên/toàn lớp
+UI -> ReportSystem: Yêu cầu báo cáo chi tiết
+activate ReportSystem
+ReportSystem -> StudyDB: Lấy dữ liệu chi tiết
+activate StudyDB
+StudyDB --> ReportSystem: Trả về dữ liệu chi tiết
+deactivate StudyDB
+ReportSystem --> UI: Hiển thị báo cáo chi tiết
+deactivate ReportSystem
+UI --> Teacher: Hiển thị thông tin chi tiết
+
+opt Xuất báo cáo
+    Teacher -> UI: Chọn xuất báo cáo
+    UI -> ReportSystem: Yêu cầu xuất báo cáo
+    activate ReportSystem
+    ReportSystem --> UI: Tạo file báo cáo
+    deactivate ReportSystem
+    UI --> Teacher: Cung cấp file báo cáo để tải xuống
+end
+
+deactivate UI
+deactivate Teacher
+
+@enduml

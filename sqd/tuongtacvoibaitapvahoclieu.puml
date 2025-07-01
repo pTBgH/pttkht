@@ -1,0 +1,90 @@
+@startuml
+title Sơ đồ tuần tự - Tương tác với bài tập và học liệu
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Học viên" as Student
+boundary "<u>:Giao diện\n<u>Học viên" as UI
+control "<u>:Hệ thống\n<u>Quản lý tài liệu" as DocumentSystem
+control "<u>:Hệ thống\n<u>Quản lý bài tập" as AssignmentSystem
+entity "<u>:Cơ sở dữ liệu" as DB
+
+== Xem tài liệu học tập ==
+activate Student
+Student -> UI: Chọn lớp học và "Tài liệu học tập"
+activate UI
+UI -> DocumentSystem: Yêu cầu danh sách tài liệu của lớp
+activate DocumentSystem
+DocumentSystem -> DB: Lấy danh sách tài liệu (file, bài giảng, video)
+activate DB
+DB --> DocumentSystem: Trả về danh sách tài liệu
+deactivate DB
+DocumentSystem --> UI: Hiển thị danh sách tài liệu
+deactivate DocumentSystem
+UI --> Student: Hiển thị tài liệu có thể tải xuống/xem trực tuyến
+
+Student -> UI: Chọn tài liệu để tải xuống/xem
+UI -> DocumentSystem: Yêu cầu truy cập tài liệu
+activate DocumentSystem
+DocumentSystem --> UI: Cung cấp tài liệu
+deactivate DocumentSystem
+UI --> Student: Hiển thị/tải xuống tài liệu
+
+== Tương tác với bài tập ==
+Student -> UI: Chọn "Danh sách bài tập"
+UI -> AssignmentSystem: Yêu cầu danh sách bài tập của lớp
+activate AssignmentSystem
+AssignmentSystem -> DB: Lấy danh sách bài tập và trạng thái
+activate DB
+DB --> AssignmentSystem: Trả về bài tập với deadline và trạng thái
+deactivate DB
+AssignmentSystem --> UI: Hiển thị danh sách bài tập
+deactivate AssignmentSystem
+UI --> Student: Hiển thị bài tập (chưa nộp/đã nộp/đã chấm)
+
+Student -> UI: Chọn bài tập để nộp
+UI -> AssignmentSystem: Kiểm tra thời hạn nộp bài
+activate AssignmentSystem
+AssignmentSystem --> UI: Xác nhận còn trong thời hạn
+deactivate AssignmentSystem
+UI --> Student: Hiển thị form nộp bài tập
+
+Student -> UI: Tải lên file bài làm
+UI -> DocumentSystem: Kiểm tra định dạng và kích thước file
+activate DocumentSystem
+
+alt File hợp lệ và trong thời hạn
+    DocumentSystem --> UI: File hợp lệ
+    deactivate DocumentSystem
+    UI -> AssignmentSystem: Lưu bài nộp
+    activate AssignmentSystem
+    AssignmentSystem -> DB: Lưu bài làm và cập nhật trạng thái
+    activate DB
+    DB --> AssignmentSystem: Xác nhận lưu thành công
+    deactivate DB
+    AssignmentSystem --> UI: Thông báo nộp bài thành công
+    deactivate AssignmentSystem
+    UI --> Student: Hiển thị thông báo nộp bài thành công
+else File không hợp lệ hoặc quá hạn
+    DocumentSystem --> UI: Cảnh báo file không hợp lệ hoặc quá hạn
+    deactivate DocumentSystem
+    UI --> Student: Hiển thị lỗi và yêu cầu kiểm tra lại
+end
+
+== Xem điểm và phản hồi ==
+Student -> UI: Chọn "Điểm & phản hồi" của bài tập
+UI -> AssignmentSystem: Yêu cầu điểm và nhận xét của bài tập
+activate AssignmentSystem
+AssignmentSystem -> DB: Lấy điểm và phản hồi từ giáo viên
+activate DB
+DB --> AssignmentSystem: Trả về điểm số và nhận xét
+deactivate DB
+AssignmentSystem --> UI: Hiển thị điểm và nhận xét chi tiết
+deactivate AssignmentSystem
+UI --> Student: Hiển thị kết quả chấm bài
+
+deactivate UI
+deactivate Student
+
+@enduml

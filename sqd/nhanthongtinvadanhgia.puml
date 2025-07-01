@@ -1,0 +1,83 @@
+@startuml
+title Sơ đồ tuần tự - Nhận thông tin và đánh giá
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Học viên" as Student
+boundary "<u>:Giao diện\n<u>Học viên" as UI
+control "<u>:Hệ thống\n<u>Thông báo" as NotificationSystem
+control "<u>:Hệ thống\n<u>Đánh giá" as EvaluationSystem
+entity "<u>:Cơ sở dữ liệu" as DB
+
+activate Student
+Student -> UI: Chọn "Thông báo"
+activate UI
+UI -> NotificationSystem: Yêu cầu danh sách thông báo
+activate NotificationSystem
+NotificationSystem -> DB: Lấy thông báo chung và riêng cho học viên
+activate DB
+
+alt Có thông báo mới
+    DB --> NotificationSystem: Trả về danh sách thông báo
+    deactivate DB
+    NotificationSystem --> UI: Hiển thị danh sách thông báo
+    deactivate NotificationSystem
+    UI --> Student: Hiển thị thông báo từ quản lý/giáo viên
+else Không có thông báo mới
+    DB --> NotificationSystem: Không có thông báo mới
+    deactivate DB
+    NotificationSystem --> UI: Thông báo "Không có thông báo mới"
+    deactivate NotificationSystem
+    UI --> Student: Hiển thị thông báo không có tin mới
+end
+
+Student -> UI: Chọn thông báo để đọc chi tiết
+UI -> NotificationSystem: Yêu cầu nội dung thông báo
+activate NotificationSystem
+NotificationSystem -> DB: Lấy nội dung chi tiết thông báo
+activate DB
+DB --> NotificationSystem: Trả về nội dung thông báo
+deactivate DB
+NotificationSystem --> UI: Hiển thị nội dung thông báo
+deactivate NotificationSystem
+UI --> Student: Hiển thị chi tiết thông báo
+
+Student -> UI: Chọn "Đánh giá giáo viên" (sau khi hoàn thành khóa học)
+UI -> EvaluationSystem: Yêu cầu form đánh giá giáo viên
+activate EvaluationSystem
+EvaluationSystem -> EvaluationSystem: Kiểm tra học viên đã đánh giá chưa
+activate EvaluationSystem
+EvaluationSystem -> DB: Kiểm tra danh sách đã đánh giá
+activate DB
+
+alt Chưa đánh giá
+    DB --> EvaluationSystem: Chưa có đánh giá
+    deactivate DB
+    EvaluationSystem --> EvaluationSystem: Cho phép đánh giá
+    deactivate EvaluationSystem
+    EvaluationSystem --> UI: Hiển thị phiếu đánh giá
+    deactivate EvaluationSystem
+    UI --> Student: Hiển thị form đánh giá (phương pháp, nội dung, nhiệt tình)
+    
+    Student -> UI: Điền phiếu đánh giá và gửi
+    UI -> EvaluationSystem: Lưu đánh giá của học viên
+    activate EvaluationSystem
+    EvaluationSystem -> DB: Lưu phản hồi đánh giá
+    activate DB
+    DB --> EvaluationSystem: Xác nhận lưu thành công
+    deactivate DB
+    EvaluationSystem --> UI: Thông báo đánh giá thành công
+    UI --> Student: Hiển thị thông báo cảm ơn
+else Đã đánh giá
+    EvaluationSystem --> UI: Thông báo đã đánh giá trước đó
+    deactivate EvaluationSystem
+    UI --> Student: Hiển thị thông báo đã đánh giá
+    deactivate UI
+
+end
+
+deactivate Student
+
+@enduml
+

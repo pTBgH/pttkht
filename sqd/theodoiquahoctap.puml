@@ -1,0 +1,87 @@
+@startuml
+title Sơ đồ tuần tự - Theo dõi quá trình học tập
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Học viên" as Student
+boundary "<u>:Giao diện\n<u>Học viên" as UI
+control "<u>:Hệ thống\n<u>Quản lý khóa học" as CourseSystem
+control "<u>:Hệ thống\n<u>Thời khóa biểu" as ScheduleSystem
+control "<u>:Hệ thống\n<u>Điểm số" as GradeSystem
+entity "<u>:Cơ sở dữ liệu" as DB
+
+== Xem khóa học đã đăng ký ==
+activate Student
+Student -> UI: Chọn "Khóa học của tôi"
+activate UI
+UI -> CourseSystem: Yêu cầu danh sách khóa học của học viên
+activate CourseSystem
+CourseSystem -> DB: Lấy danh sách khóa học đã đăng ký
+activate DB
+
+alt Có khóa học
+    DB --> CourseSystem: Trả về danh sách khóa học
+    deactivate DB
+    CourseSystem --> UI: Hiển thị danh sách khóa học (tên, tiến độ, giáo viên)
+    deactivate CourseSystem
+    UI --> Student: Hiển thị khóa học đang học và đã hoàn thành
+else Chưa có khóa học
+    DB --> CourseSystem: Không có dữ liệu
+    deactivate DB
+    CourseSystem --> UI: Thông báo "Chưa có khóa học"
+    deactivate CourseSystem
+    UI --> Student: Hiển thị thông báo chưa có khóa học
+end
+
+== Xem chi tiết khóa học ==
+Student -> UI: Chọn một khóa học để xem chi tiết
+UI -> ScheduleSystem: Yêu cầu thời khóa biểu của khóa học
+activate ScheduleSystem
+ScheduleSystem -> DB: Lấy lịch học và danh sách buổi học
+activate DB
+
+alt Có lịch học
+    DB --> ScheduleSystem: Trả về thời khóa biểu
+    deactivate DB
+    ScheduleSystem --> UI: Hiển thị thời khóa biểu theo ngày/tuần
+    deactivate ScheduleSystem
+    UI --> Student: Hiển thị lịch học chi tiết
+else Chưa có lịch học
+    DB --> ScheduleSystem: Chưa có lịch học cụ thể
+    deactivate DB
+    ScheduleSystem --> UI: Thông báo "Lịch học đang được cập nhật"
+    deactivate ScheduleSystem
+    UI --> Student: Hiển thị thông báo lịch học đang cập nhật
+end
+
+== Xem điểm số và kết quả học tập ==
+Student -> UI: Chọn "Điểm số và kết quả"
+UI -> GradeSystem: Yêu cầu điểm số và kết quả học tập
+activate GradeSystem
+GradeSystem -> DB: Lấy điểm số bài tập, quiz, kỳ thi
+activate DB
+DB --> GradeSystem: Trả về điểm số và đánh giá
+deactivate DB
+GradeSystem --> UI: Hiển thị điểm số và đánh giá tổng kết
+deactivate GradeSystem
+UI --> Student: Hiển thị kết quả học tập chi tiết
+
+Student -> UI: Chọn "Lịch sử học tập"
+UI -> CourseSystem: Yêu cầu lịch sử các khóa học đã tham gia
+activate CourseSystem
+CourseSystem -> DB: Lấy danh sách khóa học đã hoàn thành
+activate DB
+DB --> CourseSystem: Trả về lịch sử học tập
+deactivate DB
+CourseSystem --> UI: Hiển thị lịch sử học tập
+deactivate CourseSystem
+UI --> Student: Hiển thị các khóa học đã tham gia trong quá khứ
+
+deactivate UI
+deactivate Student
+
+@enduml
+
+
+

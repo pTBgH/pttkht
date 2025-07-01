@@ -1,0 +1,72 @@
+
+@startuml
+title Sơ đồ tuần tự - Chấm điểm và phản hồi
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Giảng viên" as Teacher
+boundary "<u>:Giao diện\n<u>Giảng viên" as UI
+control "<u>:Hệ thống\n<u>Xác thực điểm" as GradingSystem
+control "<u>:Hệ thống\n<u>Thông báo" as NotificationSystem
+entity "<u>:Cơ sở dữ liệu" as GradeDB
+
+activate Teacher
+Teacher -> UI: Chọn "Bài tập"
+activate UI
+UI -> GradingSystem: Yêu cầu hiển thị bài nộp
+activate GradingSystem
+GradingSystem -> GradeDB: Lấy danh sách bài đã nộp và chưa nộp
+activate GradeDB
+GradeDB --> GradingSystem: Trả về danh sách bài nộp
+deactivate GradeDB
+GradingSystem --> UI: Hiển thị danh sách học viên và trạng thái nộp bài
+UI --> Teacher: Hiển thị danh sách bài đã nộp/chưa nộp
+deactivate GradingSystem
+
+Teacher -> UI: Chọn học viên và bài nộp để chấm
+UI -> GradingSystem: Yêu cầu hiển thị nội dung bài làm
+activate GradingSystem
+GradingSystem -> GradeDB: Lấy nội dung bài làm của học viên
+activate GradeDB
+GradeDB --> GradingSystem: Trả về nội dung bài làm
+deactivate GradeDB
+GradingSystem --> UI: Hiển thị nội dung bài làm
+deactivate GradingSystem
+
+UI --> Teacher: Hiển thị bài làm và form chấm điểm
+
+Teacher -> UI: Nhập điểm và nhận xét
+UI -> GradingSystem: Kiểm tra tính hợp lệ của điểm
+activate GradingSystem
+
+alt Điểm hợp lệ và đủ thông tin
+    GradingSystem --> UI: Điểm hợp lệ
+    deactivate GradingSystem
+    UI -> GradingSystem: Lưu điểm và nhận xét
+    activate GradingSystem
+    GradingSystem -> GradeDB: Cập nhật điểm và nhận xét
+    activate GradeDB
+    GradeDB --> GradingSystem: Xác nhận cập nhật thành công
+    deactivate GradeDB
+    GradingSystem -> NotificationSystem: Thông báo điểm cho học viên
+    activate NotificationSystem
+    NotificationSystem --> GradingSystem: Xác nhận gửi thông báo
+    deactivate NotificationSystem
+    GradingSystem --> UI: Thông báo lưu điểm thành công
+    deactivate GradingSystem
+    UI --> Teacher: Hiển thị thông báo thành công
+else Điểm không hợp lệ
+    GradingSystem --> UI: Cảnh báo điểm ngoài thang điểm
+    deactivate GradingSystem
+    UI --> Teacher: Hiển thị lỗi và yêu cầu nhập lại
+else Thiếu thông tin
+    GradingSystem --> UI: Nhắc hoàn thiện nhận xét
+    deactivate GradingSystem
+    UI --> Teacher: Yêu cầu nhập đầy đủ thông tin
+    deactivate UI
+end
+
+deactivate Teacher
+
+@enduml

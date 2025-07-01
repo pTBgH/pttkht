@@ -1,0 +1,46 @@
+@startuml
+title Sơ đồ tuần tự - Quản lý lớp học (chi tiết)
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Quản lý" as Admin
+boundary "<u>:Giao diện\n<u>Quản lý" as UI
+control "<u>:Hệ thống\n<u>Quản lý lớp học" as ClassSystem
+entity "<u>:Cơ sở dữ liệu" as DB 
+
+== Phân học viên vào lớp ==
+Admin -> UI: Chọn "Phân học viên vào lớp"
+activate UI
+UI -> ClassSystem: Yêu cầu danh sách học viên chờ phân lớp
+activate ClassSystem
+ClassSystem -> DB: Truy vấn học viên chờ
+activate DB
+DB --> ClassSystem: Danh sách học viên chờ
+deactivate DB
+ClassSystem --> UI: Danh sách học viên
+deactivate ClassSystem
+UI --> Admin: Hiển thị danh sách học viên
+deactivate UI
+
+Admin -> UI: Chọn học viên và lớp để phân
+activate UI
+UI -> ClassSystem: Kiểm tra sức chứa lớp
+activate ClassSystem
+
+alt Lớp còn chỗ
+    ClassSystem -> DB: Cập nhật học viên vào lớp
+    activate DB
+    DB --> ClassSystem: Cập nhật thành công
+    ClassSystem --> UI: Thông báo phân lớp thành công
+    UI --> Admin: Hiển thị thông báo thành công
+else Lớp đã đầy
+    DB --> ClassSystem: Cập nhật không thành công
+    deactivate DB
+    ClassSystem --> UI: Cảnh báo lớp đầy
+    deactivate ClassSystem
+    UI --> Admin: Hiển thị cảnh báo và ngăn thao tác
+    deactivate UI
+end
+
+@enduml

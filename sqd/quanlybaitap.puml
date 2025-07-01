@@ -1,0 +1,154 @@
+@startuml
+title Sơ đồ tuần tự - Quản lý bài tập
+
+
+' Cấu hình giao diện
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+
+' Định nghĩa các thành phần
+actor ":Giảng viên" as Teacher
+boundary ":Giao diện\nGiảng viên" as UI
+control ":Hệ thống\nQuản lý bài tập" as AssignmentSystem
+control ":Hệ thống\nThông báo" as NotificationSystem
+entity ":Cơ sở dữ liệu" as AssignmentDB
+entity ":Hệ thống\nlưu trữ tệp" as FileStorage
+
+== Xem danh sách bài tập ==
+activate Teacher
+Teacher -> UI: Chọn "Bài tập" của lớp
+activate UI
+UI -> AssignmentSystem: Yêu cầu danh sách bài tập
+activate AssignmentSystem
+AssignmentSystem -> AssignmentDB: Truy vấn danh sách bài tập theo lớp
+activate AssignmentDB
+AssignmentDB --> AssignmentSystem: Trả về danh sách bài tập + trạng thái
+deactivate AssignmentDB
+AssignmentSystem --> UI: Gửi danh sách bài tập
+deactivate AssignmentSystem
+UI --> Teacher: Hiển thị danh sách bài tập
+deactivate UI
+
+
+' == Tạo bài tập ==
+' Teacher -> UI: Nhấn "Tạo bài tập mới"
+' activate UI
+' UI --> Teacher: Hiển thị form nhập thông tin bài tập
+' Teacher -> UI: Nhập nội dung bài tập, đối tượng, deadline
+' Note left of UI: Đối tượng gồm hệ thống chung \nhoặc một số lớp cụ thể
+' alt Deadline hợp lệ
+'     UI -> UI: Kiểm tra deadline hợp lệ không
+'     activate UI
+'     deactivate UI
+'     UI -> AssignmentSystem: Gửi dữ liệu bài tập
+'     activate AssignmentSystem
+'     AssignmentSystem -> AssignmentDB: Lưu thông tin bài tập
+'     activate AssignmentDB
+'     AssignmentDB --> AssignmentSystem: Xác nhận lưu thành công
+'     deactivate AssignmentDB
+'     AssignmentSystem -> NotificationSystem: Gửi thông báo đến học viên
+'     activate NotificationSystem
+'     NotificationSystem --> AssignmentSystem: Xác nhận gửi thông báo
+'     deactivate NotificationSystem
+'     AssignmentSystem --> UI: Thông báo tạo bài tập thành công
+'     deactivate AssignmentSystem
+'     UI --> Teacher: Hiển thị thông báo thành công
+' else Deadline không hợp lệ
+'     ' AssignmentSystem --> UI: Thông báo lỗi
+'     ' deactivate AssignmentSystem
+'     UI --> Teacher: Hiển thị thông báo lỗi\nvà yêu cầu chỉnh sửa
+'     deactivate UI
+' end
+
+== Tạo bài tập ==
+Teacher -> UI: Nhấn "Tạo bài tập mới"
+activate UI
+UI --> Teacher: Hiển thị form tải bài tập
+
+Teacher -> UI: Nhập thông tin, đối tượng và chọn tệp bài tập
+note left of UI: Đối tượng gồm hệ thống chung \nhoặc một số lớp cụ thể
+UI -> AssignmentSystem: Kiểm tra định dạng và kích thước tệp
+activate AssignmentSystem
+
+alt Tệp hợp lệ
+    AssignmentSystem --> UI: Tệp hợp lệ
+    deactivate AssignmentSystem
+
+    UI -> AssignmentSystem: Gửi metadata + upload file
+    activate AssignmentSystem
+
+    AssignmentSystem -> FileStorage: Lưu tệp bài tập
+    activate FileStorage
+    FileStorage --> AssignmentSystem: Trả về đường dẫn tệp
+    deactivate FileStorage
+
+    AssignmentSystem -> AssignmentDB: Lưu metadata bài tập (tên, lớp, deadline, file path)
+    activate AssignmentDB
+    AssignmentDB --> AssignmentSystem: Xác nhận lưu thành công
+    deactivate AssignmentDB
+
+    AssignmentSystem -> NotificationSystem: Gửi thông báo cho lớp
+    activate NotificationSystem
+    NotificationSystem --> AssignmentSystem: Xác nhận gửi
+    deactivate NotificationSystem
+
+    AssignmentSystem --> UI: Thông báo tạo bài tập thành công
+    deactivate AssignmentSystem
+    UI --> Teacher: Hiển thị thông báo thành công
+
+else Tệp không hợp lệ
+    AssignmentSystem --> UI: Cảnh báo định dạng/kích thước không hợp lệ
+    deactivate AssignmentSystem
+    UI --> Teacher: Hiển thị cảnh báo và yêu cầu chọn lại tệp
+    deactivate UI
+end
+
+== Sửa bài tập ==
+Teacher -> UI: Nhấn nút "Sửa" bài tập
+activate UI
+UI -> AssignmentSystem: Yêu cầu thông tin bài tập theo ID
+activate AssignmentSystem
+AssignmentSystem -> AssignmentDB: Truy vấn thông tin bài tập
+activate AssignmentDB
+AssignmentDB --> AssignmentSystem: Trả về thông tin bài tập
+deactivate AssignmentDB
+AssignmentSystem --> UI: Gửi dữ liệu bài tập
+deactivate AssignmentSystem
+UI --> Teacher: Hiển thị form sửa bài tập
+Teacher -> UI: Cập nhật nội dung, deadline
+alt Deadline hợp lệ
+    UI -> AssignmentSystem: Gửi dữ liệu cập nhật
+    activate AssignmentSystem
+    AssignmentSystem -> AssignmentDB: Lưu thay đổi bài tập
+    activate AssignmentDB
+    AssignmentDB --> AssignmentSystem: Xác nhận cập nhật thành công
+    deactivate AssignmentDB
+    AssignmentSystem --> UI: Thông báo cập nhật thành công
+    deactivate AssignmentSystem
+    UI --> Teacher: Hiển thị thông báo thành công
+else Deadline không hợp lệ
+    UI --> Teacher: Hiển thị thông báo lỗi deadline
+    deactivate UI
+end
+
+
+== Xóa bài tập ==
+Teacher -> UI: Nhấn nút "Xóa" bài tập
+activate UI
+UI -> AssignmentSystem: Yêu cầu xóa bài tập theo ID
+activate AssignmentSystem
+AssignmentSystem -> AssignmentDB: Xóa bài tập
+activate AssignmentDB
+AssignmentDB --> AssignmentSystem: Xác nhận xóa thành công
+deactivate AssignmentDB
+AssignmentSystem --> UI: Thông báo xóa thành công
+deactivate AssignmentSystem
+UI --> Teacher: Hiển thị thông báo thành công
+deactivate UI
+
+
+deactivate Teacher
+
+
+@enduml

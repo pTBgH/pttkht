@@ -1,0 +1,90 @@
+
+@startuml
+title Sơ đồ tuần tự - Chức năng tài khoản (Người dùng)
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Người dùng" as Teacher
+boundary "<u>:Giao diện\n<u>Đăng nhập" as LoginUI
+control "<u>:Hệ thống\n<u>Xác thực" as AuthSystem
+control "<u>:Hệ thống\n<u>Email/SMS" as NotificationService
+entity "<u>:Cơ sở dữ liệu" as AccountDB
+
+== Đăng nhập ==
+activate Teacher
+Teacher -> LoginUI: Truy cập trang đăng nhập
+activate LoginUI
+LoginUI --> Teacher: Hiển thị form đăng nhập
+Teacher -> LoginUI: Nhập email/SĐT và mật khẩu
+LoginUI -> AuthSystem: Xác thực thông tin đăng nhập
+activate AuthSystem
+AuthSystem -> AccountDB: Kiểm tra thông tin tài khoản
+activate AccountDB
+AccountDB --> AuthSystem: Trả về kết quả xác thực
+deactivate AccountDB
+
+alt Đăng nhập thành công
+    AuthSystem --> LoginUI: Xác thực thành công
+    deactivate AuthSystem
+    LoginUI --> Teacher: Chuyển đến trang cá nhân/lớp học
+    deactivate LoginUI
+else Đăng nhập thất bại
+    AuthSystem --> LoginUI: Xác thực thất bại
+    deactivate AuthSystem
+    LoginUI --> Teacher: Hiển thị lỗi đăng nhập
+    deactivate LoginUI
+end
+
+== Đổi mật khẩu ==
+Teacher -> LoginUI: Chọn "Đổi mật khẩu"
+activate LoginUI
+LoginUI --> Teacher: Hiển thị form đổi mật khẩu
+Teacher -> LoginUI: Nhập mật khẩu cũ và mật khẩu mới
+LoginUI -> AuthSystem: Yêu cầu đổi mật khẩu
+activate AuthSystem
+AuthSystem -> AccountDB: Kiểm tra mật khẩu cũ và cập nhật mật khẩu mới
+activate AccountDB
+AccountDB --> AuthSystem: Xác nhận cập nhật mật khẩu
+deactivate AccountDB
+AuthSystem --> LoginUI: Thông báo đổi mật khẩu thành công
+deactivate AuthSystem
+LoginUI --> Teacher: Hiển thị thông báo thành công
+deactivate LoginUI
+
+== Quên mật khẩu ==
+Teacher -> LoginUI: Chọn "Quên mật khẩu"
+activate LoginUI
+LoginUI --> Teacher: Hiển thị form khôi phục mật khẩu
+Teacher -> LoginUI: Nhập email/SĐT
+LoginUI -> AuthSystem: Yêu cầu khôi phục mật khẩu
+activate AuthSystem
+AuthSystem -> NotificationService: Gửi mã xác thực
+activate NotificationService
+NotificationService --> AuthSystem: Xác nhận gửi mã
+deactivate NotificationService
+AuthSystem --> LoginUI: Thông báo đã gửi mã xác thực
+LoginUI --> Teacher: Hiển thị form nhập mã xác thực
+Teacher -> LoginUI: Nhập mã xác thực và mật khẩu mới
+LoginUI -> AuthSystem: Xác thực mã và đặt lại mật khẩu
+AuthSystem -> AccountDB: Cập nhật mật khẩu mới
+activate AccountDB
+AccountDB --> AuthSystem: Xác nhận cập nhật thành công
+deactivate AccountDB
+AuthSystem --> LoginUI: Thông báo đặt lại mật khẩu thành công
+deactivate AuthSystem
+LoginUI --> Teacher: Hiển thị thông báo thành công
+deactivate LoginUI
+
+== Đăng xuất ==
+Teacher -> LoginUI: Chọn "Đăng xuất"
+activate LoginUI
+LoginUI -> AuthSystem: Kết thúc phiên làm việc
+activate AuthSystem
+AuthSystem --> LoginUI: Xác nhận đăng xuất
+deactivate AuthSystem
+LoginUI --> Teacher: Chuyển về màn hình đăng nhập
+deactivate LoginUI
+deactivate Teacher
+
+@enduml

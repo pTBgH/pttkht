@@ -1,0 +1,105 @@
+@startuml
+title Sơ đồ tuần tự - Quản lý lớp học (chi tiết)
+
+skinparam participantPadding 20
+skinparam boxPadding 10
+
+actor "<u>:Giảng viên" as Teacher
+boundary "<u>:Giao diện\n<u>Giảng viên" as UI
+control "<u>:Hệ thống\n<u>Quản lý lớp học" as ClassSystem
+entity "<u>:Cơ sở dữ liệu" as DB
+
+== Xem danh sách lớp ==
+Teacher -> UI: Truy cập trang "Danh sách lớp"
+activate UI
+UI -> ClassSystem: Yêu cầu danh sách lớp của giảng viên
+activate ClassSystem
+ClassSystem -> DB: Truy vấn lớp theo ID giảng viên
+activate DB
+DB --> ClassSystem: Trả về danh sách lớp (có thể rỗng)
+deactivate DB
+
+alt Có lớp đang dạy / sắp dạy / đã dạy
+    ClassSystem --> UI: Trả về danh sách lớp có phân loại
+    UI -> Teacher: Hiển thị danh sách lớp
+else Không có lớp nào
+    ClassSystem --> UI: Trả về thông báo "Không có lớp nào"
+    deactivate ClassSystem
+    UI -> Teacher: Hiển thị thông báo
+    deactivate UI
+end
+
+== Xem chi tiết lớp ==
+Teacher -> UI: Chọn một lớp cụ thể
+activate UI
+UI -> ClassSystem: Yêu cầu chi tiết lớp
+activate ClassSystem
+ClassSystem -> DB: Truy vấn thông tin lớp và học viên
+activate DB
+DB --> ClassSystem: Trả về thông tin lớp\nvà danh sách học viên
+deactivate DB
+ClassSystem --> UI: Thông tin lớp\nvà danh sách học viên
+deactivate ClassSystem
+UI --> Teacher: Hiển thị thông tin chi tiết lớp và TKB
+deactivate UI
+
+== Điểm danh ==
+Teacher -> UI: Chọn "Điểm danh"
+activate UI
+UI -> ClassSystem: Yêu cầu form điểm danh
+activate ClassSystem
+ClassSystem -> DB: Lấy danh sách học viên của lớp
+activate DB
+DB --> ClassSystem: Danh sách học viên
+deactivate DB
+ClassSystem --> UI: Form điểm danh
+deactivate ClassSystem
+UI --> Teacher: Hiển thị form điểm danh
+deactivate UI
+
+Teacher -> UI: Chọn ngày học và điểm danh
+activate UI
+UI -> ClassSystem: Gửi thông tin điểm danh
+activate ClassSystem
+
+ClassSystem -> DB: Lưu thông tin điểm danh
+activate DB
+DB --> ClassSystem: Xác nhận lưu thành công
+deactivate DB
+ClassSystem --> UI: Thông báo điểm danh thành công
+deactivate ClassSystem
+UI --> Teacher: Hiển thị thông báo thành công
+deactivate UI
+
+
+== Giáo viên đăng thông báo ==
+Teacher -> UI: Chọn "Đăng thông báo"
+activate UI
+UI -> ClassSystem: Yêu cầu form thông báo
+activate ClassSystem
+ClassSystem --> UI: Form nhập thông báo
+deactivate ClassSystem
+UI --> Teacher: Hiển thị form thông báo
+deactivate UI
+
+Teacher -> UI: Nhập tiêu đề, nội dung và gửi
+activate UI
+UI -> ClassSystem: Kiểm tra nội dung thông báo
+activate ClassSystem
+
+alt Nội dung hợp lệ
+    ClassSystem -> DB: Lưu thông báo vào CSDL
+    activate DB
+    DB --> ClassSystem: Lưu thành công
+    ClassSystem --> UI: Thông báo thành công
+    UI --> Teacher: Hiển thị thành công
+else Thiếu tiêu đề hoặc nội dung
+    DB --> ClassSystem: Thông báo lỗi
+    deactivate DB
+    ClassSystem --> UI: Cảnh báo nhập thiếu
+    deactivate ClassSystem
+    UI --> Teacher: Hiển thị cảnh báo lỗi
+    deactivate UI
+end
+
+@enduml
