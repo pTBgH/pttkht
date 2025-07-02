@@ -1,0 +1,60 @@
+@startuml "Sơ đồ hoạt động - Quên mật khẩu"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Quên mật khẩu
+
+|Người dùng|
+start;
+:Truy cập trang\nquên mật khẩu;
+:Nhập email\nhoặc tên đăng nhập;
+
+|Hệ thống|
+:Tìm kiếm tài khoản\ntrong cơ sở dữ liệu;
+
+if (Tài khoản\ntồn tại?) then (có)
+  :Tạo mã xác thực\nngẫu nhiên (6-8 ký tự);
+  :Lưu mã xác thực\nvà thời gian hết hạn\n(15 phút);
+  :Gửi email chứa\nmã xác thực;
+  :Ghi log yêu cầu\nđặt lại mật khẩu;
+  
+  |Người dùng|
+  :Hiển thị thông báo\nkiểm tra email;
+  :Kiểm tra email\nvà lấy mã xác thực;
+  :Nhập mã xác thực\nvào form;
+  
+  |Hệ thống|
+  :Kiểm tra mã xác thực\nvà thời gian hết hạn;
+  
+  if (Mã xác thực\nhợp lệ?) then (có)
+    |Người dùng|
+    :Chuyển đến trang\nnhập mật khẩu mới;
+    
+  else (không)
+    |Hệ thống|
+    :Ghi log thất bại;
+    |Người dùng|
+    :Hiển thị thông báo\nmã xác thực không hợp lệ\nhoặc đã hết hạn;
+    :Quay lại form\nnhập mã xác thực;
+  endif
+  
+else (không)
+  |Hệ thống|
+  :Ghi log thất bại;
+  |Người dùng|
+  :Hiển thị thông báo\ntài khoản không tồn tại;
+  :Quay lại form\nquên mật khẩu;
+endif
+
+stop
+
+@enduml

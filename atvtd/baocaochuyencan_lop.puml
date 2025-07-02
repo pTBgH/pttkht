@@ -1,0 +1,66 @@
+@startuml "Sơ đồ hoạt động - Báo cáo chuyên cần theo lớp"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Báo cáo chuyên cần theo lớp
+
+|Giáo viên/Quản trị viên|
+start;
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nbáo cáo chuyên cần;
+:Chọn báo cáo\ntheo lớp;
+
+|Hệ thống|
+:Kiểm tra quyền\ntruy cập báo cáo;
+
+if (Có quyền\ntruy cập?) then (có)
+  :Lấy danh sách\nlớp học;
+  
+  |Giáo viên/Quản trị viên|
+  :Chọn lớp học\nmuốn báo cáo;
+  
+  |Hệ thống|
+  :Lấy dữ liệu\nđiểm danh lớp;
+  :Tính tỷ lệ tham gia\ntheo lớp;
+  :Tạo báo cáo\nchuyên cần lớp;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo\nchuyên cần lớp;
+  note right
+    Báo cáo chuyên cần lớp bao gồm:
+    - Tổng số buổi học
+    - Tỷ lệ tham gia trung bình của lớp
+    - Danh sách học viên vắng nhiều
+    - Xu hướng tham gia theo thời gian
+    - Biểu đồ chuyên cần
+    - Thống kê theo trạng thái
+  end note
+  
+
+  if (Muốn xuất\nbáo cáo?) then (có)
+    :Chọn định dạng\nxuất file;
+    |Hệ thống|
+    :Tạo file báo cáo\n(PDF/Excel);
+    |Giáo viên/Quản trị viên|
+    :Tải xuống\nbáo cáo;
+  else (không)
+  endif
+  
+else (không)
+  :Hiển thị thông báo\nkhông có quyền;
+  -> \n\n\n\n\n;
+  :Quay lại\ntrang chủ;
+endif
+
+stop
+
+@enduml

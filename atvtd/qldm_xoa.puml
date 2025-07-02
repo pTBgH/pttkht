@@ -1,0 +1,65 @@
+@startuml "Sơ đồ hoạt động - Xóa thông tin"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+title Sơ đồ hoạt động - Xóa thông tin
+|Người dùng|
+start;
+:Chọn mục cần xóa\nvà nhấn nút "Xóa";
+|Hệ thống|
+
+
+  :Xác định vai trò\nngười dùng;
+  :Kiểm tra quyền xóa\ntheo vai trò;
+  
+  if (Có quyền\nxóa?) then (có)
+    :Lấy thông tin hiện tại\ntừ cơ sở dữ liệu;
+    :Kiểm tra chính sách\nxóa liên kết;
+        
+        if (Có thể xóa\nliên kết?) then (có)
+          |Người dùng|
+          :Hiển thị hộp thoại\nxác nhận xóa;
+          :Xác nhận có muốn\nxóa không?;
+          
+          if (Xác nhận\nxóa?) then (có)
+            |Hệ thống|
+            :Lưu bản sao\ndữ liệu để audit;
+            :Xử lý file đính kèm\n(xóa hoặc di chuyển);
+            :Xóa dữ liệu liên kết\n(nếu cần);
+            :Xóa thông tin\nkhỏi cơ sở dữ liệu;
+            -> \n\n;
+            :Ghi log hoạt động\nxóa;
+            
+            |Người dùng|
+            :Hiển thị thông báo\nxóa thành công;
+            :Cập nhật danh sách\nloại bỏ mục đã xóa;
+            -> \n\n;
+          else (không)
+            :Hủy thao tác xóa;
+            :Quay lại trang\nchi tiết;
+          endif
+          
+        else (không)
+          :Hiển thị thông báo\nkhông thể xóa do\nràng buộc liên kết;
+          :Quay lại trang\nchi tiết;
+        endif
+        
+      
+      
+    
+    
+  else (không)
+    :Hiển thị thông báo\nkhông có quyền xóa;
+    :Chuyển về trang\ndanh sách;
+  endif
+
+stop
+@enduml

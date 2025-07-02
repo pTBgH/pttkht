@@ -1,0 +1,66 @@
+@startuml "Sơ đồ hoạt động - Báo cáo chuyên cần theo cá nhân"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Báo cáo chuyên cần theo cá nhân
+
+|Giáo viên/Quản trị viên|
+start;
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nbáo cáo chuyên cần;
+:Chọn báo cáo\ntheo cá nhân;
+
+|Hệ thống|
+:Kiểm tra quyền\ntruy cập báo cáo;
+
+if (Có quyền\ntruy cập?) then (có)
+  :Lấy danh sách\nhọc viên;
+  
+  |Giáo viên/Quản trị viên|
+  :Chọn học viên\nmuốn báo cáo;
+  
+  |Hệ thống|
+  :Lấy dữ liệu\nđiểm danh cá nhân;
+  :Tính tỷ lệ tham gia\ncá nhân;
+  :Tạo báo cáo\nchuyên cần cá nhân;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo\nchuyên cần cá nhân;
+  note right
+    Báo cáo chuyên cần cá nhân bao gồm:
+    - Lịch sử điểm danh chi tiết
+    - Tỷ lệ tham gia tổng thể
+    - Số buổi vắng có phép/không phép
+    - Số lần đi muộn/về sớm
+    - Xu hướng tham gia theo thời gian
+    - Cảnh báo chuyên cần (nếu có)
+    - Biểu đồ tham gia cá nhân
+  end note
+  
+  if (Muốn xuất\nbáo cáo?) then (có)
+    :Chọn định dạng\nxuất file;
+    |Hệ thống|
+    :Tạo file báo cáo\n(PDF/Excel);
+    |Giáo viên/Quản trị viên|
+    :Tải xuống\nbáo cáo;
+  else (không)
+  endif
+  
+else (không)
+  :Hiển thị thông báo\nkhông có quyền;
+  -> \n\n\n\n\n;
+  :Quay lại trang\nchủ;
+endif
+
+stop
+
+@enduml
