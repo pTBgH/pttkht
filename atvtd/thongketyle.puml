@@ -35,7 +35,7 @@ if (Toàn khóa học?) then (Có)
 |Giáo viên/Quản trị viên|
 :Xác nhận;
   |Hệ thống|
-  -> \n\n\n;
+  -> \n\n\n\n\n\n;
   :Lấy và tính dữ liệu toàn khóa;
   -> \n\n;
   |Giáo viên/Quản trị viên|
@@ -43,7 +43,7 @@ if (Toàn khóa học?) then (Có)
 else if (Theo lớp?) then (Có)
 |Giáo viên/Quản trị viên|
 : Xác nhận;
--> \n\n;
+-> \n\n\n\n\n;
   |Hệ thống|
   :Lấy danh sách lớp;
   -> \n;
