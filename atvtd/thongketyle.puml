@@ -59,6 +59,7 @@ else
   |Hệ thống|
   :Lấy danh sách học viên;
   |Giáo viên/Quản trị viên|
+  -> \n;
   :Chọn học viên;
   |Hệ thống|
   -> \n\n;
