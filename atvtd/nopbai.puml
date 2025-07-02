@@ -97,11 +97,9 @@ endif
 
 if (Nộp muộn?) then (có)
   :Đánh dấu trạng thái\nnộp muộn;
-  :Tính toán mức\ntrừ điểm (nếu có);
 endif
 
-:Tạo thông báo\ncho giáo viên;
-:Gửi email xác nhận\ncho học viên;
+:Tạo thông báo\ncho Giảng viên và \nGửi email xác nhận\ncho học viên;
 
 |Học viên|
 :Hiển thị thông báo\nnộp bài thành công;

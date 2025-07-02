@@ -23,7 +23,7 @@ alt Có thông báo mới
     deactivate DB
     NotificationSystem --> UI: Hiển thị danh sách thông báo
     deactivate NotificationSystem
-    UI --> Student: Hiển thị thông báo từ quản lý/giáo viên
+    UI --> Student: Hiển thị thông báo từ quản lý/Giảng viên
 else Không có thông báo mới
     DB --> NotificationSystem: Không có thông báo mới
     deactivate DB
@@ -43,8 +43,8 @@ NotificationSystem --> UI: Hiển thị nội dung thông báo
 deactivate NotificationSystem
 UI --> Student: Hiển thị chi tiết thông báo
 
-Student -> UI: Chọn "Đánh giá giáo viên" (sau khi hoàn thành khóa học)
-UI -> EvaluationSystem: Yêu cầu form đánh giá giáo viên
+Student -> UI: Chọn "Đánh giá Giảng viên" (sau khi hoàn thành khóa học)
+UI -> EvaluationSystem: Yêu cầu form đánh giá Giảng viên
 activate EvaluationSystem
 EvaluationSystem -> EvaluationSystem: Kiểm tra học viên đã đánh giá chưa
 activate EvaluationSystem

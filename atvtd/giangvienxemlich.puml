@@ -11,18 +11,18 @@ skinparam activityEndColorBorder black
 skinparam activityBarColor black
 skinparam circledCharacterFontColor black
 
-title Sơ đồ hoạt động - Xem thời khóa biểu (Giáo viên)
+title Sơ đồ hoạt động - Xem thời khóa biểu (Giảng viên)
 
-|Giáo viên|
+|Giảng viên|
 start
 :Đăng nhập vào\nhệ thống;
 :Truy cập trang\nthời khóa biểu;
 
 |Hệ thống|
-:Xác thực thông tin\ngiáo viên;
+:Xác thực thông tin\nGiảng viên;
 :Lấy danh sách lớp\nđược phân công;
 
-|Giáo viên|
+|Giảng viên|
 :Chọn loại lịch\nmuốn xem;
 
 if (Loại lịch?) then (Lịch giảng dạy)
@@ -31,7 +31,7 @@ if (Loại lịch?) then (Lịch giảng dạy)
   :Lấy thông tin môn học,\nlớp học, thời gian;
 
   :Hiển thị lịch giảng dạy\ntheo tuần/tháng;
-  |Giáo viên|
+  |Giảng viên|
   :Xem chi tiết từng\ntiết học;
   
   if (Muốn xuất lịch?) then (có)
@@ -39,7 +39,7 @@ if (Loại lịch?) then (Lịch giảng dạy)
     -> \n\n\n\n;
     :Tạo file PDF/Excel\nlịch giảng dạy;
     -> \n\n;
-    |Giáo viên|
+    |Giảng viên|
     :Tải xuống file\nlịch giảng dạy;
   endif
   
@@ -50,10 +50,10 @@ else (Lịch học)
   :Lấy thông tin thời gian\nhọc của học sinh;
   :Hiển thị lịch học\ntheo từng lớp;
   -> \n;
-  |Giáo viên|
+  |Giảng viên|
   :Xem thời gian học\ncủa học sinh;
   
-  |Giáo viên|
+  |Giảng viên|
   -> \n\n;
   :Chọn lớp cụ thể\nđể xem chi tiết;
   
@@ -61,12 +61,12 @@ else (Lịch học)
   :Hiển thị lịch học\nchi tiết của lớp;
   :Hiển thị danh sách\nhọc sinh trong lớp;
   
-  |Giáo viên|
+  |Giảng viên|
   if (Muốn xuất lịch\nlớp?) then (có)
     -> \n\n;
     |Hệ thống|
     :Tạo file PDF/Excel\nlịch học lớp;
-    |Giáo viên|
+    |Giảng viên|
     :Tải xuống file\nlịch học lớp;
   endif
 endif

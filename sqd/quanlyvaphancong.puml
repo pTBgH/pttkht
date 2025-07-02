@@ -28,7 +28,7 @@ deactivate Database
 alt Có lớp cần phân công
     TeachingSystem --> TeachingUI: Hiển thị danh sách lớp
     
-    Manager -> TeachingUI: Chọn lớp, chọn giáo viên để phân công
+    Manager -> TeachingUI: Chọn lớp, chọn Giảng viên để phân công
     TeachingUI -> TeachingSystem: Gửi yêu cầu phân công
 
     TeachingSystem -> Database: Kiểm tra lịch dạy của GV
@@ -36,7 +36,7 @@ alt Có lớp cần phân công
     Database --> TeachingSystem: Trả về kết quả kiểm tra
     deactivate Database
 
-    alt Lịch dạy của giáo viên không bị trùng
+    alt Lịch dạy của Giảng viên không bị trùng
         TeachingSystem -> Database: Lưu thông tin phân công
         activate Database
         alt Lưu thành công
@@ -49,9 +49,9 @@ alt Có lớp cần phân công
             TeachingSystem --> TeachingUI: Thông báo "Lỗi hệ thống, không thể lưu."
             TeachingUI --> Manager: Thông báo "Lỗi hệ thống, không thể lưu."
         end
-    else Lịch dạy của giáo viên bị trùng
-        TeachingSystem --> TeachingUI: Cảnh báo "Lịch giáo viên bị trùng!"
-        TeachingUI --> Manager: Cảnh báo "Lịch giáo viên bị trùng!"
+    else Lịch dạy của Giảng viên bị trùng
+        TeachingSystem --> TeachingUI: Cảnh báo "Lịch Giảng viên bị trùng!"
+        TeachingUI --> Manager: Cảnh báo "Lịch Giảng viên bị trùng!"
     end
 
 else Không có lớp nào cần phân công

@@ -76,7 +76,7 @@ end
 Student -> UI: Chọn "Điểm & phản hồi" của bài tập
 UI -> AssignmentSystem: Yêu cầu điểm và nhận xét của bài tập
 activate AssignmentSystem
-AssignmentSystem -> DB: Lấy điểm và phản hồi từ giáo viên
+AssignmentSystem -> DB: Lấy điểm và phản hồi từ Giảng viên
 activate DB
 DB --> AssignmentSystem: Trả về điểm số và nhận xét
 deactivate DB

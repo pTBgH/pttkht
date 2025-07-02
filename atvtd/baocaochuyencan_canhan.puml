@@ -13,7 +13,7 @@ skinparam circledCharacterFontColor black
 
 title Sơ đồ hoạt động - Báo cáo chuyên cần theo cá nhân
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 start;
 :Đăng nhập vào\nhệ thống;
 :Truy cập trang\nbáo cáo chuyên cần;
@@ -25,7 +25,7 @@ start;
 if (Có quyền\ntruy cập?) then (có)
   :Lấy danh sách\nhọc viên;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Chọn học viên\nmuốn báo cáo;
   
   |Hệ thống|
@@ -33,7 +33,7 @@ if (Có quyền\ntruy cập?) then (có)
   :Tính tỷ lệ tham gia\ncá nhân;
   :Tạo báo cáo\nchuyên cần cá nhân;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem báo cáo\nchuyên cần cá nhân;
   note right
     Báo cáo chuyên cần cá nhân bao gồm:
@@ -50,7 +50,7 @@ if (Có quyền\ntruy cập?) then (có)
     :Chọn định dạng\nxuất file;
     |Hệ thống|
     :Tạo file báo cáo\n(PDF/Excel);
-    |Giáo viên/Quản trị viên|
+    |Giảng viên/Quản lý|
     :Tải xuống\nbáo cáo;
   else (không)
   endif

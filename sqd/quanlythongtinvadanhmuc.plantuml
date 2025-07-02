@@ -143,7 +143,7 @@ Admin -> UI: Chọn "Tạo lớp mới"
 activate UI
 UI -> CategorySystem: Yêu cầu form tạo lớp
 activate CategorySystem
-CategorySystem -> DB: Truy vấn dữ liệu liên quan\n(khóa học, chi nhánh, giáo viên)
+CategorySystem -> DB: Truy vấn dữ liệu liên quan\n(khóa học, chi nhánh, Giảng viên)
 activate DB
 DB --> CategorySystem: Trả về danh sách tùy chọn
 deactivate DB
@@ -151,13 +151,13 @@ CategorySystem --> UI: Hiển thị form với các tùy chọn
 deactivate CategorySystem
 UI --> Admin: Hiển thị form tạo lớp
 
-Admin -> UI: Chọn khóa học, chi nhánh,\nthời gian bắt đầu/kết thúc, giáo viên
+Admin -> UI: Chọn khóa học, chi nhánh,\nthời gian bắt đầu/kết thúc, Giảng viên
 UI -> CategorySystem: Gửi yêu cầu tạo lớp
 activate CategorySystem
 CategorySystem -> ValidationService: Xác thực thông tin lớp học
 activate ValidationService
 
-alt Thông tin hợp lệ (ngày, phòng trống, giáo viên rảnh)
+alt Thông tin hợp lệ (ngày, phòng trống, Giảng viên rảnh)
     ValidationService --> CategorySystem: Xác nhận hợp lệ
     deactivate ValidationService
     CategorySystem -> DB: Lưu thông tin lớp học mới

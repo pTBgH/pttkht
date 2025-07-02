@@ -1,12 +1,12 @@
-Tuyệt vời. Mình sẽ viết mô tả chi tiết từng use case cho hệ thống website quản lý hoạt động trung tâm tiếng Anh, chia theo vai trò: Quản lý, Giáo viên và Học viên. Đầu ra sẽ được trình bày dưới định dạng Markdown để bạn dễ đọc và sử dụng.
+Tuyệt vời. Mình sẽ viết mô tả chi tiết từng use case cho hệ thống website quản lý hoạt động trung tâm tiếng Anh, chia theo vai trò: Quản lý, Giảng viên và Học viên. Đầu ra sẽ được trình bày dưới định dạng Markdown để bạn dễ đọc và sử dụng.
 Mình sẽ gửi lại bản mô tả chi tiết ngay sau khi hoàn thành.
 Mô tả Use Case Hệ thống Quản lý Trung tâm Tiếng Anh
 Quản lý (Manager)
 Quản lý tài khoản
-Mô tả: Quản lý (administrator) có thể tạo mới, chỉnh sửa, xóa và phân quyền tài khoản người dùng (bao gồm giáo viên, học viên và các quản lý khác). Use case này bắt đầu khi quản lý đăng nhập thành công và truy cập chức năng quản lý tài khoản. Hệ thống hiển thị danh sách người dùng hiện có và các tùy chọn để thêm mới hoặc chỉnh sửa.
+Mô tả: Quản lý (administrator) có thể tạo mới, chỉnh sửa, xóa và phân quyền tài khoản người dùng (bao gồm Giảng viên, học viên và các quản lý khác). Use case này bắt đầu khi quản lý đăng nhập thành công và truy cập chức năng quản lý tài khoản. Hệ thống hiển thị danh sách người dùng hiện có và các tùy chọn để thêm mới hoặc chỉnh sửa.
 Luồng sự kiện chính:
 1.	Quản lý đăng nhập vào hệ thống và chọn chức năng “Quản lý tài khoản”.
-2.	Hệ thống hiển thị danh sách người dùng (học viên/giáo viên/quản lý) hiện có.
+2.	Hệ thống hiển thị danh sách người dùng (học viên/Giảng viên/quản lý) hiện có.
 3.	Quản lý chọn “Tạo tài khoản mới”, nhập các thông tin cần thiết (tên, vai trò, email, mật khẩu, v.v.) và xác nhận tạo mới. Hệ thống lưu thông tin và thông báo tạo thành công.
 4.	Quản lý có thể chọn một tài khoản từ danh sách để chỉnh sửa hoặc xóa. Khi chỉnh sửa, quản lý thay đổi thông tin và lưu; khi xóa, hệ thống yêu cầu xác nhận rồi xoá tài khoản.
 5.	Quản lý đặt quyền (vai trò và phân quyền) cho từng tài khoản thông qua giao diện phân quyền, hệ thống lưu thay đổi.
@@ -14,26 +14,26 @@ Luồng sự kiện chính:
 Luồng ngoại lệ: Nếu quản lý nhập thiếu thông tin bắt buộc khi tạo hoặc sửa, hệ thống hiển thị cảnh báo và yêu cầu điền lại. Nếu email trùng hoặc không hợp lệ, hệ thống từ chối tạo mới.
 Kết quả: Tài khoản người dùng được tạo, chỉnh sửa hoặc xoá theo yêu cầu, và quyền truy cập tương ứng được cập nhật.
 Quản lý thông tin và danh mục
-Mô tả: Quản lý có thể quản lý các thông tin, danh mục liên quan đến học viên, giáo viên, khóa học, lớp học, phòng học, chuyên đề, bài tập và tài liệu học tập. Use case cho phép tạo, xem, sửa, xóa chi tiết các đối tượng này.
+Mô tả: Quản lý có thể quản lý các thông tin, danh mục liên quan đến học viên, Giảng viên, khóa học, lớp học, phòng học, chuyên đề, bài tập và tài liệu học tập. Use case cho phép tạo, xem, sửa, xóa chi tiết các đối tượng này.
 Luồng sự kiện chính:
-1.	Quản lý chọn chức năng tương ứng (ví dụ “Danh sách khóa học”, “Quản lý giáo viên”, “Quản lý học viên”, “Danh sách lớp học” hay “Quản lý chuyên đề”).
+1.	Quản lý chọn chức năng tương ứng (ví dụ “Danh sách khóa học”, “Quản lý Giảng viên”, “Quản lý học viên”, “Danh sách lớp học” hay “Quản lý chuyên đề”).
 2.	Hệ thống hiển thị danh sách mục đã chọn cùng với thông tin chi tiết.
 3.	Quản lý có thể nhấp “Thêm mới” để nhập thông tin của đối tượng mới (ví dụ thông tin khóa học hay thông tin phòng học), sau đó lưu. Hệ thống thêm đối tượng và xác nhận thành công.
 4.	Quản lý cũng có thể chọn mục có sẵn để chỉnh sửa thông tin (ví dụ cập nhật mô tả khóa học, cập nhật chuyên đề) hoặc xóa mục. Khi chỉnh sửa, quản lý lưu thay đổi; khi xóa, hệ thống yêu cầu xác nhận rồi loại bỏ mục khỏi hệ thống.
-5.	Đối với lớp học, quản lý tiến hành tạo lớp mới bằng cách chọn khóa học, chi nhánh, thời gian, giáo viên dạy (nếu biết trước) và phòng học. Hệ thống lưu lớp học mới và hiển thị trong danh sách các lớp của tất cả chi nhánh.
+5.	Đối với lớp học, quản lý tiến hành tạo lớp mới bằng cách chọn khóa học, chi nhánh, thời gian, Giảng viên dạy (nếu biết trước) và phòng học. Hệ thống lưu lớp học mới và hiển thị trong danh sách các lớp của tất cả chi nhánh.
 6.	Đối với chuyên đề hoặc bài tập chung, quản lý bổ sung hoặc cập nhật các tiêu đề/chuyên đề/chủ đề bài tập dùng chung cho các khóa học.
 Luồng ngoại lệ: Nếu nhập thông tin không hợp lệ (ví dụ ngày bắt đầu lớp trễ hơn ngày kết thúc), hệ thống thông báo lỗi và yêu cầu điều chỉnh. Nếu cố gắng xóa đối tượng đang được sử dụng (ví dụ xóa khóa học có lớp đang diễn ra), hệ thống cảnh báo và yêu cầu xử lý trước khi xóa.
-Kết quả: Danh mục học viên, giáo viên, khóa học, lớp học, chuyên đề, bài tập và tài liệu được quản lý đầy đủ. Mọi thay đổi được lưu và cập nhật trong hệ thống.
+Kết quả: Danh mục học viên, Giảng viên, khóa học, lớp học, chuyên đề, bài tập và tài liệu được quản lý đầy đủ. Mọi thay đổi được lưu và cập nhật trong hệ thống.
 Quản lý giảng dạy và học tập
-Mô tả: Quản lý điều phối việc giảng dạy và học tập giữa giáo viên và học viên. Các chức năng bao gồm phân công giáo viên cho lớp học, xếp học viên vào lớp, cấp quyền điểm danh cho giáo viên, và xem thời khóa biểu tổng thể cũng như lịch sử lớp học.
+Mô tả: Quản lý điều phối việc giảng dạy và học tập giữa Giảng viên và học viên. Các chức năng bao gồm phân công Giảng viên cho lớp học, xếp học viên vào lớp, cấp quyền điểm danh cho Giảng viên, và xem thời khóa biểu tổng thể cũng như lịch sử lớp học.
 Luồng sự kiện chính:
-1.	Quản lý chọn chức năng “Phân công giảng dạy”: Hệ thống hiển thị danh sách lớp học cần phân công. Quản lý chọn một lớp và gán giáo viên phụ trách, sau đó lưu.
+1.	Quản lý chọn chức năng “Phân công giảng dạy”: Hệ thống hiển thị danh sách lớp học cần phân công. Quản lý chọn một lớp và gán Giảng viên phụ trách, sau đó lưu.
 2.	Quản lý chọn “Xếp lớp cho học viên”: Hệ thống hiển thị danh sách học viên đăng ký và danh sách lớp tương ứng. Quản lý xếp từng học viên vào lớp học đã đăng ký hoặc điều chỉnh lớp phù hợp cho học viên.
-3.	Quản lý vào mục “Quản lý điểm danh” để cấp quyền cho giáo viên. Quản lý chọn giáo viên hoặc bộ phận thích hợp và cấp quyền thực hiện điểm danh cho các buổi học.
+3.	Quản lý vào mục “Quản lý điểm danh” để cấp quyền cho Giảng viên. Quản lý chọn Giảng viên hoặc bộ phận thích hợp và cấp quyền thực hiện điểm danh cho các buổi học.
 4.	Quản lý chọn “Thời khóa biểu tổng thể”: Hệ thống hiển thị thời khóa biểu của trung tâm (tất cả cơ sở chi nhánh) theo tuần hoặc tháng để giám sát lịch hoạt động chung.
 5.	Quản lý cũng có thể truy cập “Lịch sử học viên”: Chọn một học viên, hệ thống hiển thị lịch sử các lớp và khóa học mà học viên đã tham gia.
-Luồng ngoại lệ: Nếu cố gắng phân công giáo viên vào lớp mà giáo viên đó đã được phân công lớp khác cùng giờ, hệ thống cảnh báo xung đột và đề nghị chọn giáo viên khác. Nếu xếp học viên vào lớp vượt quá sức chứa hoặc không đúng trình độ, hệ thống thông báo lỗi.
-Kết quả: Giáo viên và học viên được xếp lịch học phù hợp, và quản lý có thể theo dõi lịch giảng dạy cũng như lịch sử học tập của học viên.
+Luồng ngoại lệ: Nếu cố gắng phân công Giảng viên vào lớp mà Giảng viên đó đã được phân công lớp khác cùng giờ, hệ thống cảnh báo xung đột và đề nghị chọn Giảng viên khác. Nếu xếp học viên vào lớp vượt quá sức chứa hoặc không đúng trình độ, hệ thống thông báo lỗi.
+Kết quả: Giảng viên và học viên được xếp lịch học phù hợp, và quản lý có thể theo dõi lịch giảng dạy cũng như lịch sử học tập của học viên.
 Báo cáo và thống kê
 Mô tả: Quản lý có thể xem, tạo và xuất các báo cáo thống kê về hoạt động trung tâm, bao gồm báo cáo điểm số, bài tập, chuyên cần của học viên và quản lý thông báo chung.
 Luồng sự kiện chính:
@@ -43,81 +43,81 @@ Luồng sự kiện chính:
 4.	Quản lý sử dụng chức năng “Gửi thông báo chung”: Nhập nội dung thông báo và gửi đến toàn bộ người dùng hoặc nhóm người dùng nhất định (toàn hệ thống hoặc từng chi nhánh). Hệ thống gửi thông báo dưới dạng tin nhắn/email đến những người nhận.
 Luồng ngoại lệ: Nếu không có dữ liệu (ví dụ lớp chưa có điểm hoặc bài tập), hệ thống thông báo không có dữ liệu để hiển thị. Khi gửi thông báo nếu bị lỗi kết nối, hệ thống thông báo gửi thất bại và đề nghị thử lại.
 Kết quả: Các báo cáo và thống kê được tạo ra và xuất theo yêu cầu, hỗ trợ quản lý theo dõi hiệu quả đào tạo. Thông báo chung được gửi đến đúng đối tượng và ghi lại lịch sử thông báo.
-Giáo viên (Teacher)
+Giảng viên (Teacher)
 Quản lý lớp học
-Mô tả: Giáo viên có thể xem thông tin về các lớp mình được phân công giảng dạy và quản lý một số tính năng của lớp đó, như xem danh sách học viên, thực hiện điểm danh, đăng thông báo và phân bổ học viên.
+Mô tả: Giảng viên có thể xem thông tin về các lớp mình được phân công giảng dạy và quản lý một số tính năng của lớp đó, như xem danh sách học viên, thực hiện điểm danh, đăng thông báo và phân bổ học viên.
 Luồng sự kiện chính:
-1.	Giáo viên đăng nhập và chọn chức năng “Danh sách lớp”: Hệ thống hiển thị các lớp mà giáo viên phụ trách (đang dạy, đã dạy trong quá khứ, sắp dạy).
-2.	Giáo viên chọn một lớp để xem chi tiết, bao gồm danh sách học viên trong lớp đó và thời khóa biểu.
-3.	Trong mỗi buổi học, giáo viên chọn “Điểm danh”: Chọn ngày học và đánh dấu học viên có mặt hoặc vắng. Hệ thống lưu thông tin chuyên cần.
-4.	Giáo viên có thể đăng thông báo riêng cho lớp học của mình: Nhập tiêu đề và nội dung thông báo, sau đó gửi. Hệ thống lưu lịch sử thông báo và hiển thị cho học viên trong lớp.
-5.	Nếu có học viên đăng ký sau khi lớp đã mở, giáo viên sử dụng chức năng “Phân học viên vào lớp” để xác nhận hoặc chuyển học viên vào lớp học phù hợp.
-Luồng ngoại lệ: Nếu giáo viên chọn điểm danh cho ngày không có lịch học, hệ thống thông báo lỗi. Khi đăng thông báo, nếu nội dung rỗng, hệ thống yêu cầu nhập đủ thông tin. Nếu phân học viên vào lớp quá số lượng cho phép, hệ thống cảnh báo và ngăn không cho thêm.
-Kết quả: Giáo viên có thể theo dõi và quản lý lớp học của mình hiệu quả: danh sách học viên, thông báo lớp, và lịch học được cập nhật đầy đủ. Thông tin điểm danh được ghi nhận cho mỗi buổi học.
+1.	Giảng viên đăng nhập và chọn chức năng “Danh sách lớp”: Hệ thống hiển thị các lớp mà Giảng viên phụ trách (đang dạy, đã dạy trong quá khứ, sắp dạy).
+2.	Giảng viên chọn một lớp để xem chi tiết, bao gồm danh sách học viên trong lớp đó và thời khóa biểu.
+3.	Trong mỗi buổi học, Giảng viên chọn “Điểm danh”: Chọn ngày học và đánh dấu học viên có mặt hoặc vắng. Hệ thống lưu thông tin chuyên cần.
+4.	Giảng viên có thể đăng thông báo riêng cho lớp học của mình: Nhập tiêu đề và nội dung thông báo, sau đó gửi. Hệ thống lưu lịch sử thông báo và hiển thị cho học viên trong lớp.
+5.	Nếu có học viên đăng ký sau khi lớp đã mở, Giảng viên sử dụng chức năng “Phân học viên vào lớp” để xác nhận hoặc chuyển học viên vào lớp học phù hợp.
+Luồng ngoại lệ: Nếu Giảng viên chọn điểm danh cho ngày không có lịch học, hệ thống thông báo lỗi. Khi đăng thông báo, nếu nội dung rỗng, hệ thống yêu cầu nhập đủ thông tin. Nếu phân học viên vào lớp quá số lượng cho phép, hệ thống cảnh báo và ngăn không cho thêm.
+Kết quả: Giảng viên có thể theo dõi và quản lý lớp học của mình hiệu quả: danh sách học viên, thông báo lớp, và lịch học được cập nhật đầy đủ. Thông tin điểm danh được ghi nhận cho mỗi buổi học.
 Quản lý học liệu và bài tập
-Mô tả: Giáo viên có khả năng quản lý các tài liệu học tập và bài tập dành cho lớp mình. Họ có thể đăng tải tài liệu, tạo và giao bài tập cho học viên.
+Mô tả: Giảng viên có khả năng quản lý các tài liệu học tập và bài tập dành cho lớp mình. Họ có thể đăng tải tài liệu, tạo và giao bài tập cho học viên.
 Luồng sự kiện chính:
-1.	Giáo viên chọn “Tài liệu học tập” của một lớp: Hệ thống hiển thị danh sách tài liệu đã có và cho phép đăng tài liệu mới.
-2.	Để thêm tài liệu, giáo viên chọn chức năng “Tải lên”, nhập tên tài liệu, mô tả, và tải tệp (PDF, video, v.v.). Hệ thống lưu tài liệu vào kho học liệu của lớp.
-3.	Giáo viên chọn “Bài tập” của một lớp: Hiển thị danh sách bài tập đã giao và trạng thái hoàn thành của học viên. Giáo viên có thể tạo bài tập mới bằng cách nhập nội dung và deadline. Hệ thống lưu bài tập và thông báo cho học viên.
-4.	Giáo viên cũng quản lý chuyên đề bài tập hoặc bài giảng, sắp xếp các chuyên đề theo bài học.
-Luồng ngoại lệ: Nếu giáo viên cố gắng đăng tài liệu không đúng định dạng hoặc quá lớn, hệ thống cảnh báo và yêu cầu tải lên định dạng/tập tin phù hợp. Khi tạo bài tập, nếu deadline không hợp lý (ví dụ trước ngày hiện tại), hệ thống báo lỗi yêu cầu điều chỉnh.
+1.	Giảng viên chọn “Tài liệu học tập” của một lớp: Hệ thống hiển thị danh sách tài liệu đã có và cho phép đăng tài liệu mới.
+2.	Để thêm tài liệu, Giảng viên chọn chức năng “Tải lên”, nhập tên tài liệu, mô tả, và tải tệp (PDF, video, v.v.). Hệ thống lưu tài liệu vào kho học liệu của lớp.
+3.	Giảng viên chọn “Bài tập” của một lớp: Hiển thị danh sách bài tập đã giao và trạng thái hoàn thành của học viên. Giảng viên có thể tạo bài tập mới bằng cách nhập nội dung và deadline. Hệ thống lưu bài tập và thông báo cho học viên.
+4.	Giảng viên cũng quản lý chuyên đề bài tập hoặc bài giảng, sắp xếp các chuyên đề theo bài học.
+Luồng ngoại lệ: Nếu Giảng viên cố gắng đăng tài liệu không đúng định dạng hoặc quá lớn, hệ thống cảnh báo và yêu cầu tải lên định dạng/tập tin phù hợp. Khi tạo bài tập, nếu deadline không hợp lý (ví dụ trước ngày hiện tại), hệ thống báo lỗi yêu cầu điều chỉnh.
 Kết quả: Tài liệu học tập và bài tập được quản lý đầy đủ: học viên sẽ thấy tài liệu mới tải lên và danh sách bài tập được giao cùng với thông tin deadline.
 Chấm điểm và phản hồi
-Mô tả: Giáo viên quản lý quá trình chấm bài của học viên, bao gồm xem bài tập đã nộp, chấm điểm, nhập điểm và đưa ra nhận xét phản hồi. Giáo viên cũng có thể đánh giá học sinh (ví dụ đánh giá quá trình học tập).
+Mô tả: Giảng viên quản lý quá trình chấm bài của học viên, bao gồm xem bài tập đã nộp, chấm điểm, nhập điểm và đưa ra nhận xét phản hồi. Giảng viên cũng có thể đánh giá học sinh (ví dụ đánh giá quá trình học tập).
 Luồng sự kiện chính:
-1.	Giáo viên vào mục “Bài tập đã nộp” trong một lớp: Hệ thống hiển thị danh sách học viên đã nộp và các bài chưa nộp.
-2.	Giáo viên chọn một học viên và bài nộp của họ để chấm bài. Giáo viên xem nội dung, chấm điểm, và nhập nhận xét/chú thích phản hồi.
-3.	Giáo viên lưu điểm và nhận xét. Hệ thống cập nhật điểm cho học viên và cho phép học viên xem lại bài làm có điểm số và nhận xét vừa nhập.
-4.	Giáo viên cũng có thể đánh giá chung tiến độ của học viên (ví dụ điển hình là đưa ra nhận xét tổng quát sau khóa học hoặc cuối kỳ).
-Luồng ngoại lệ: Nếu giáo viên nhập điểm ngoài thang điểm (ví dụ nhập 11/10), hệ thống cảnh báo và yêu cầu nhập lại. Nếu giáo viên cố đóng điểm mà chưa nhập đủ thông tin, hệ thống nhắc hoàn thiện nhận xét.
-Kết quả: Điểm số và nhận xét của giáo viên được lưu lại cho mỗi bài tập của học viên. Học viên có thể xem điểm và nhận xét này để cải thiện. Giáo viên cũng có đánh giá về học sinh sau khi kết thúc khóa học.
+1.	Giảng viên vào mục “Bài tập đã nộp” trong một lớp: Hệ thống hiển thị danh sách học viên đã nộp và các bài chưa nộp.
+2.	Giảng viên chọn một học viên và bài nộp của họ để chấm bài. Giảng viên xem nội dung, chấm điểm, và nhập nhận xét/chú thích phản hồi.
+3.	Giảng viên lưu điểm và nhận xét. Hệ thống cập nhật điểm cho học viên và cho phép học viên xem lại bài làm có điểm số và nhận xét vừa nhập.
+4.	Giảng viên cũng có thể đánh giá chung tiến độ của học viên (ví dụ điển hình là đưa ra nhận xét tổng quát sau khóa học hoặc cuối kỳ).
+Luồng ngoại lệ: Nếu Giảng viên nhập điểm ngoài thang điểm (ví dụ nhập 11/10), hệ thống cảnh báo và yêu cầu nhập lại. Nếu Giảng viên cố đóng điểm mà chưa nhập đủ thông tin, hệ thống nhắc hoàn thiện nhận xét.
+Kết quả: Điểm số và nhận xét của Giảng viên được lưu lại cho mỗi bài tập của học viên. Học viên có thể xem điểm và nhận xét này để cải thiện. Giảng viên cũng có đánh giá về học sinh sau khi kết thúc khóa học.
 Báo cáo và theo dõi
-Mô tả: Giáo viên có thể theo dõi tiến độ học tập của học viên trong lớp mình thông qua các báo cáo và thống kê.
+Mô tả: Giảng viên có thể theo dõi tiến độ học tập của học viên trong lớp mình thông qua các báo cáo và thống kê.
 Luồng sự kiện chính:
-1.	Giáo viên chọn “Báo cáo lớp học”: Hệ thống hiển thị báo cáo tổng hợp về điểm số trung bình từng học viên, tình trạng nộp bài (đã nộp/chưa nộp) và chuyên cần (số buổi có mặt).
-2.	Giáo viên có thể lựa chọn xem chi tiết từng học viên hoặc toàn lớp. Báo cáo có dạng bảng và biểu đồ đơn giản cho dễ theo dõi.
-3.	Nếu cần, giáo viên xuất báo cáo hoặc ghi chú thêm trên báo cáo (tuỳ theo tính năng hệ thống).
+1.	Giảng viên chọn “Báo cáo lớp học”: Hệ thống hiển thị báo cáo tổng hợp về điểm số trung bình từng học viên, tình trạng nộp bài (đã nộp/chưa nộp) và chuyên cần (số buổi có mặt).
+2.	Giảng viên có thể lựa chọn xem chi tiết từng học viên hoặc toàn lớp. Báo cáo có dạng bảng và biểu đồ đơn giản cho dễ theo dõi.
+3.	Nếu cần, Giảng viên xuất báo cáo hoặc ghi chú thêm trên báo cáo (tuỳ theo tính năng hệ thống).
 Luồng ngoại lệ: Nếu lớp vừa mới bắt đầu chưa có dữ liệu, hệ thống hiển thị thông báo “Chưa có dữ liệu”.
-Kết quả: Giáo viên nắm được tình hình học tập của lớp và từng học viên, từ đó có biện pháp hỗ trợ kịp thời (bằng việc chỉnh sửa phương pháp dạy, nhắc nhở nộp bài, v.v).
-Chức năng tài khoản (Giáo viên)
-Mô tả: Giáo viên có thể quản lý tài khoản của mình, bao gồm đăng nhập, đăng xuất và thay đổi hoặc khôi phục mật khẩu.
+Kết quả: Giảng viên nắm được tình hình học tập của lớp và từng học viên, từ đó có biện pháp hỗ trợ kịp thời (bằng việc chỉnh sửa phương pháp dạy, nhắc nhở nộp bài, v.v).
+Chức năng tài khoản (Giảng viên)
+Mô tả: Giảng viên có thể quản lý tài khoản của mình, bao gồm đăng nhập, đăng xuất và thay đổi hoặc khôi phục mật khẩu.
 Luồng sự kiện chính:
-1.	Giáo viên truy cập trang đăng nhập, nhập thông tin (email/số điện thoại và mật khẩu) và đăng nhập. Hệ thống xác thực và cho vào trang cá nhân hoặc trang lớp học.
-2.	Sau khi đăng nhập, giáo viên có thể chọn “Đổi mật khẩu”: Nhập mật khẩu cũ và mật khẩu mới, xác nhận để thay đổi. Hệ thống kiểm tra và cập nhật mật khẩu mới.
-3.	Nếu quên mật khẩu, giáo viên chọn “Quên mật khẩu” và thực hiện quy trình khôi phục (ví dụ nhận mã xác thực qua email hoặc SMS rồi đặt lại mật khẩu). Hệ thống gửi mã xác thực và cho phép tạo mật khẩu mới.
-4.	Giáo viên chọn “Đăng xuất” để kết thúc phiên làm việc và trở về màn hình đăng nhập.
-Kết quả: Giáo viên có thể an tâm sử dụng tài khoản của mình, đảm bảo thông tin đăng nhập được bảo mật và có thể khôi phục khi cần.
+1.	Giảng viên truy cập trang đăng nhập, nhập thông tin (email/số điện thoại và mật khẩu) và đăng nhập. Hệ thống xác thực và cho vào trang cá nhân hoặc trang lớp học.
+2.	Sau khi đăng nhập, Giảng viên có thể chọn “Đổi mật khẩu”: Nhập mật khẩu cũ và mật khẩu mới, xác nhận để thay đổi. Hệ thống kiểm tra và cập nhật mật khẩu mới.
+3.	Nếu quên mật khẩu, Giảng viên chọn “Quên mật khẩu” và thực hiện quy trình khôi phục (ví dụ nhận mã xác thực qua email hoặc SMS rồi đặt lại mật khẩu). Hệ thống gửi mã xác thực và cho phép tạo mật khẩu mới.
+4.	Giảng viên chọn “Đăng xuất” để kết thúc phiên làm việc và trở về màn hình đăng nhập.
+Kết quả: Giảng viên có thể an tâm sử dụng tài khoản của mình, đảm bảo thông tin đăng nhập được bảo mật và có thể khôi phục khi cần.
 Học viên (Student)
 Theo dõi quá trình học tập
 Mô tả: Học viên có thể theo dõi các khóa học và lớp học mình đã và đang tham gia. Họ xem thông tin khóa học, thời khóa biểu cá nhân, kết quả học tập và lịch sử học tập.
 Luồng sự kiện chính:
-1.	Học viên đăng nhập và chọn “Khóa học của tôi”: Hệ thống liệt kê các khóa đang học và đã hoàn thành. Mỗi mục hiển thị thông tin cơ bản (tên khóa học, tiến độ, giáo viên phụ trách).
+1.	Học viên đăng nhập và chọn “Khóa học của tôi”: Hệ thống liệt kê các khóa đang học và đã hoàn thành. Mỗi mục hiển thị thông tin cơ bản (tên khóa học, tiến độ, Giảng viên phụ trách).
 2.	Học viên chọn một khóa học hoặc lớp để xem chi tiết, bao gồm lịch học và danh sách buổi học. Hệ thống hiển thị thời khóa biểu cá nhân (tất cả các lớp của học viên) theo ngày/tuần.
 3.	Học viên kiểm tra “Điểm số và kết quả”: Xem điểm đã nhận trong từng bài tập, quiz hoặc kỳ thi, cùng với đánh giá tổng kết nếu có.
 4.	Học viên cũng có thể xem “Lịch sử học tập”, thấy các lớp/học phần đã tham gia trong quá khứ để tham khảo kết quả cũ.
 Luồng ngoại lệ: Nếu học viên chưa tham gia khóa học nào, hệ thống hiển thị thông báo “Chưa có khóa học”. Nếu chưa có lịch học cụ thể, thông báo “Lịch học đang được cập nhật”.
 Kết quả: Học viên nắm được toàn bộ thông tin về quá trình học: đã đăng ký và đã học, giúp họ sắp xếp thời gian và thấy được kết quả học tập của mình.
 Tương tác với bài tập và học liệu
-Mô tả: Học viên có thể xem, tải xuống các tài liệu học tập do giáo viên cung cấp, cũng như xem và nộp bài tập của mình.
+Mô tả: Học viên có thể xem, tải xuống các tài liệu học tập do Giảng viên cung cấp, cũng như xem và nộp bài tập của mình.
 Luồng sự kiện chính:
 1.	Học viên chọn lớp học của mình và vào phần “Tài liệu học tập”: Hệ thống hiển thị danh sách tài liệu (file, bài giảng, video). Học viên chọn tải xuống hoặc xem trực tuyến từng tài liệu.
 2.	Học viên chọn “Danh sách bài tập”: Xem tất cả bài tập được giao với deadline, trạng thái (chưa nộp, đã nộp, đã chấm).
 3.	Để nộp bài, học viên chọn một bài tập và thực hiện “Nộp bài tập”: Tải lên file bài làm (định dạng văn bản, PDF, ảnh, v.v.) trước hạn. Hệ thống lưu bài nộp và đánh dấu trạng thái đã nộp.
-4.	Sau khi giáo viên chấm điểm, học viên vào phần “Điểm & phản hồi” của bài tập đó để xem điểm số và nhận xét chi tiết.
+4.	Sau khi Giảng viên chấm điểm, học viên vào phần “Điểm & phản hồi” của bài tập đó để xem điểm số và nhận xét chi tiết.
 Luồng ngoại lệ: Nếu học viên nộp trễ (qua hạn) hoặc nộp file sai định dạng, hệ thống có thể từ chối hoặc cảnh báo. Nếu file quá lớn, hệ thống yêu cầu chia nhỏ hoặc nén lại.
 Kết quả: Học viên có thể tiếp cận đầy đủ tài liệu học tập và hoàn thành bài tập đúng hạn. Hệ thống ghi nhận mọi bài nộp và cho phép học viên xem kết quả chấm.
 Nhận thông tin và đánh giá
-Mô tả: Học viên nhận các thông báo từ giáo viên hoặc hệ thống, đồng thời thực hiện đánh giá phản hồi giáo viên sau khi khóa học kết thúc.
+Mô tả: Học viên nhận các thông báo từ Giảng viên hoặc hệ thống, đồng thời thực hiện đánh giá phản hồi Giảng viên sau khi khóa học kết thúc.
 Luồng sự kiện chính:
-1.	Học viên có mục “Thông báo”: Hệ thống tổng hợp tất cả thông báo chung (do quản lý gửi) hoặc riêng (do giáo viên các lớp gửi) mà học viên là người nhận. Học viên mở để đọc nội dung thông báo.
-2.	Sau khi hoàn thành một khóa học, học viên nhận được lời mời “Đánh giá giáo viên”: Hệ thống hiển thị phiếu đánh giá (dựa trên các tiêu chí như phương pháp giảng dạy, nội dung, nhiệt tình, v.v.). Học viên gửi phản hồi và đánh giá tổng thể cho khóa học/giáo viên đó.
+1.	Học viên có mục “Thông báo”: Hệ thống tổng hợp tất cả thông báo chung (do quản lý gửi) hoặc riêng (do Giảng viên các lớp gửi) mà học viên là người nhận. Học viên mở để đọc nội dung thông báo.
+2.	Sau khi hoàn thành một khóa học, học viên nhận được lời mời “Đánh giá Giảng viên”: Hệ thống hiển thị phiếu đánh giá (dựa trên các tiêu chí như phương pháp giảng dạy, nội dung, nhiệt tình, v.v.). Học viên gửi phản hồi và đánh giá tổng thể cho khóa học/Giảng viên đó.
 Luồng ngoại lệ: Nếu hệ thống chưa có thông báo nào mới, mục Thông báo hiện thông báo “Không có thông báo mới”. Nếu học viên cố gắng bỏ phiếu hai lần, hệ thống kiểm tra danh sách đã đánh giá và ngăn thực hiện.
-Kết quả: Học viên cập nhật được các thông tin quan trọng từ trung tâm và giáo viên. Phản hồi đánh giá của học viên giúp đánh giá chất lượng giảng dạy của giáo viên và cải tiến khóa học sau này.
+Kết quả: Học viên cập nhật được các thông tin quan trọng từ trung tâm và Giảng viên. Phản hồi đánh giá của học viên giúp đánh giá chất lượng giảng dạy của Giảng viên và cải tiến khóa học sau này.
 Chức năng tài khoản (Học viên)
 Mô tả: Học viên cũng có quyền quản lý tài khoản cá nhân để bảo vệ thông tin đăng nhập.
 Luồng sự kiện chính:
-1.	Học viên đăng nhập vào hệ thống bằng thông tin cá nhân (tương tự chức năng của giáo viên).
+1.	Học viên đăng nhập vào hệ thống bằng thông tin cá nhân (tương tự chức năng của Giảng viên).
 2.	Học viên có thể chọn “Đổi mật khẩu”: Nhập mật khẩu cũ, mật khẩu mới, xác nhận và lưu lại. Hệ thống kiểm tra điều kiện mật khẩu và cập nhật.
 3.	Nếu quên mật khẩu, học viên kích hoạt “Quên mật khẩu” và làm theo hướng dẫn (gửi mã xác nhận qua email/SMS) để đặt lại mật khẩu mới.
 4.	Học viên chọn “Đăng xuất” để kết thúc phiên làm việc.

@@ -13,7 +13,7 @@ skinparam circledCharacterFontColor black
 
 title Sơ đồ hoạt động - Điểm danh
 
-|Giáo viên|
+|Giảng viên|
 start
 :Truy cập trang\nquản lý lớp học;
 :Chọn lớp học\ncần điểm danh;
@@ -22,7 +22,7 @@ start
 :Lấy danh sách học viên\ntrong lớp;
 :Kiểm tra lịch học\nhiện tại;
 
-|Giáo viên|
+|Giảng viên|
 :Xem danh sách\nhọc viên;
 :Bắt đầu điểm danh\ncho buổi học;
 
@@ -32,7 +32,7 @@ start
 
 ' Vòng lặp điểm danh cho từng học viên
 repeat
-  |Giáo viên|
+  |Giảng viên|
   :Chọn học viên\ntiếp theo;
   :Đánh dấu trạng thái\ntham gia;
   
@@ -49,7 +49,7 @@ repeat
   
 repeat while (Còn học viên\nchưa điểm danh?) is (có)
 
-|Giáo viên|
+|Giảng viên|
 :Xem lại danh sách\nđiểm danh;
 
 if (Cần chỉnh sửa?) then (có)
@@ -59,7 +59,7 @@ if (Cần chỉnh sửa?) then (có)
   |Hệ thống|
   :Cập nhật thông tin\nđiểm danh;
   
-  |Giáo viên|
+  |Giảng viên|
   -> Xem lại danh sách\nđiểm danh;
 else (không)
   :Xác nhận hoàn thành\nđiểm danh;
@@ -70,13 +70,13 @@ endif
 :Cập nhật thống kê\ntham gia của học viên;
 :Gửi thông báo đến\nhọc viên vắng mặt;
 
-|Giáo viên|
+|Giảng viên|
 :Hiển thị thông báo\nđiểm danh thành công;
 
 if (Muốn xem báo cáo\nđiểm danh?) then (có)
   |Hệ thống|
   :Tạo báo cáo\nthống kế điểm danh;
-  |Giáo viên|
+  |Giảng viên|
   :Xem báo cáo\nchi tiết;
 endif
 

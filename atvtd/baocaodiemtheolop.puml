@@ -13,7 +13,7 @@ skinparam circledCharacterFontColor black
 
 title Sơ đồ hoạt động - Báo cáo điểm theo lớp / cá nhân
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 start
 :Đăng nhập vào\nhệ thống;
 :Truy cập trang\nbáo cáo thống kê;
@@ -28,14 +28,14 @@ else (không)
   stop
 endif
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 :Chọn loại báo cáo\nmuốn xem;
 
 if (Báo cáo theo lớp\nhay cá nhân?) then (theo lớp)
   |Hệ thống|
   :Lấy danh sách\nlớp học;
   -> \n;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Chọn lớp học\nmuốn báo cáo;
   -> \n\n;
   
@@ -43,7 +43,7 @@ if (Báo cáo theo lớp\nhay cá nhân?) then (theo lớp)
   :Lấy danh sách\nhọc viên trong lớp;
   :Tính toán điểm\ntrung bình lớp;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem báo cáo\nđiểm theo lớp;
   
   note right
@@ -59,14 +59,14 @@ else (cá nhân)
   |Hệ thống|
   :Lấy danh sách\nhọc viên;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Chọn học viên\nmuốn báo cáo;
   
   |Hệ thống|
   :Lấy thông tin điểm\ncủa học viên;
   :Tính toán thống kê\ncá nhân;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   -> \n\n\n\n\n\n;
   :Xem báo cáo\nđiểm cá nhân;
   
@@ -80,7 +80,7 @@ else (cá nhân)
   end note
 endif
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 if (Muốn lọc theo\nthời gian?) then (có)
   :Chọn khoảng\nthời gian;
   
@@ -88,7 +88,7 @@ if (Muốn lọc theo\nthời gian?) then (có)
   :Lọc dữ liệu\ntheo thời gian;
   :Cập nhật báo cáo;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem báo cáo\nđã lọc;
 endif
 
@@ -99,7 +99,7 @@ if (Muốn lọc theo\nbài tập?) then (có)
   :Lọc dữ liệu\ntheo bài tập;
   :Cập nhật báo cáo;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem báo cáo\ntheo bài tập;
 endif
 
@@ -109,7 +109,7 @@ if (Muốn xuất\nbáo cáo?) then (có)
   |Hệ thống|
   :Tạo file báo cáo\ntheo định dạng;
   
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Tải xuống\nfile báo cáo;
   
   note right

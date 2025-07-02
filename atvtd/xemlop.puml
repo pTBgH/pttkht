@@ -65,7 +65,7 @@ endif
 note left
   Thông tin lớp học:
   - Tên lớp học
-  - Giáo viên phụ trách
+  - Giảng viên phụ trách
   - Thời gian bắt đầu/kết thúc
   - Trạng thái lớp
   - Số học viên
@@ -144,23 +144,23 @@ if (Muốn xem lịch trình\nlớp học?) then (có)
   endif
 endif
 
-if (Muốn xem thông tin\ngiáo viên?) then (có)
+if (Muốn xem thông tin\nGiảng viên?) then (có)
   |Hệ thống|
-  :Lấy thông tin\ngiáo viên;
+  :Lấy thông tin\nGiảng viên;
   
   |Học viên|
-  :Xem hồ sơ\ngiáo viên;
+  :Xem hồ sơ\nGiảng viên;
   
   note left
-    Thông tin giáo viên:
-    - Tên giáo viên
+    Thông tin Giảng viên:
+    - Tên Giảng viên
     - Chuyên môn
     - Kinh nghiệm
     - Thông tin liên hệ
     - Đánh giá từ học viên
   end note
   
-  if (Muốn đánh giá\ngiáo viên/lớp học?) then (có)
+  if (Muốn đánh giá\nGiảng viên/lớp học?) then (có)
     |Hệ thống|
     :Kiểm tra quyền\nđánh giá;
     

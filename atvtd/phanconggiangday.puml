@@ -20,20 +20,20 @@ start
 
 |Hệ thống|
 :Lấy danh sách lớp học\nchưa được phân công;
-:Lấy danh sách giáo viên\ncó sẵn (và phù hợp);
+:Lấy danh sách Giảng viên\ncó sẵn (và phù hợp);
 
 |Người quản lý|
-:Xem danh sách lớp\nvà giáo viên;
+:Xem danh sách lớp\nvà Giảng viên;
 :Chọn lớp cần\nphân công;
 
 |Hệ thống|
 :Hiển thị thông tin\nchi tiết lớp học;
-:Hiển thị danh sách\ngiáo viên phù hợp;
+:Hiển thị danh sách\nGiảng viên phù hợp;
 
-' Bắt đầu vòng lặp để chọn giáo viên và kiểm tra xung đột
+' Bắt đầu vòng lặp để chọn Giảng viên và kiểm tra xung đột
 repeat
   |Người quản lý|
-  :Chọn giáo viên\nđể phân công;
+  :Chọn Giảng viên\nđể phân công;
 
   |Hệ thống|
   :Kiểm tra xung đột\nthời gian biểu\n(dựa trên TAL);
@@ -41,15 +41,15 @@ repeat
   if (Có xung đột\nthời gian?) then (có)
     :Hiển thị cảnh báo\nxung đột thời gian;
     |Người quản lý|
-    :Xem chi tiết\nxung đột (lớp, thời gian, giáo viên);
-    ' Luồng sẽ quay lại đầu vòng lặp để chọn giáo viên khác
+    :Xem chi tiết\nxung đột (lớp, thời gian, Giảng viên);
+    ' Luồng sẽ quay lại đầu vòng lặp để chọn Giảng viên khác
   endif
 repeat while (Còn xung đột?) is (có)
 
 |Hệ thống|
 :Lưu thông tin\nphân công vào CSDL;
 :Cập nhật trạng thái\nlớp học;
-:Gửi thông báo\ncho giáo viên được phân công;
+:Gửi thông báo\ncho Giảng viên được phân công;
 
 |Hệ thống|
 :Hiển thị thông báo\nphân công thành công;

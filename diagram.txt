@@ -1,14 +1,14 @@
 [cite_start]Dưới đây là các chức năng chính của hệ thống được mô tả trong tài liệu, bạn có thể dựa vào đây để vẽ sơ đồ hoạt động[cite: 78]:
 
 ### [cite_start]1. Quản trị hệ thống [cite: 79]
-* [cite_start]**Tạo tài khoản**: Tạo tài khoản mới cho người dùng (quản lý, giáo viên, học viên)[cite: 79].
+* [cite_start]**Tạo tài khoản**: Tạo tài khoản mới cho người dùng (quản lý, Giảng viên, học viên)[cite: 79].
 * [cite_start]**Quản trị Đăng nhập / Đăng xuất**: Kiểm soát quyền truy cập vào hệ thống[cite: 80].
-* [cite_start]**Phân quyền**: Gán quyền cho từng vai trò (admin, giáo viên, học viên)[cite: 81].
+* [cite_start]**Phân quyền**: Gán quyền cho từng vai trò (admin, Giảng viên, học viên)[cite: 81].
 * [cite_start]**Thay đổi / Quên mật khẩu**: Hỗ trợ bảo mật tài khoản[cite: 82].
 * [cite_start]**Thông báo (từ hệ thống)**: Gửi thông báo hệ thống cho người dùng[cite: 83].
 
 ### [cite_start]2. Quản lý thông tin danh mục [cite: 84]
-* [cite_start]**Quản lý thông tin học viên / giáo viên / người quản lý**: Cập nhật, chỉnh sửa hồ sơ cá nhân[cite: 84].
+* [cite_start]**Quản lý thông tin học viên / Giảng viên / người quản lý**: Cập nhật, chỉnh sửa hồ sơ cá nhân[cite: 84].
 * [cite_start]**Quản lý thông tin khóa học / lớp học / bài tập / chủ đề / tài liệu học tập / phòng học**: Tổ chức nội dung và nguồn lực phục vụ đào tạo[cite: 85].
 * [cite_start]**Quản lý tài khoản**: Bao gồm chỉnh sửa, thêm hoặc xóa tài khoản người dùng[cite: 86].
 
@@ -18,17 +18,17 @@
 * [cite_start]**Thống kê tỷ lệ hoàn thành bài tập**: Thống kê tổng số bài tập học viên đã hoàn thành trên toàn khóa học, theo lớp hoặc theo cá nhân[cite: 89, 90].
 * [cite_start]**Báo cáo chuyên cần**: Thống kê điểm danh, tỷ lệ tham gia học tập[cite: 90].
 
-### [cite_start]4. Quản lý giảng dạy (dành cho giáo viên) [cite: 91]
-* [cite_start]**Phân công giảng dạy**: Giao lớp cho giáo viên[cite: 91].
+### [cite_start]4. Quản lý giảng dạy (dành cho Giảng viên) [cite: 91]
+* [cite_start]**Phân công giảng dạy**: Giao lớp cho Giảng viên[cite: 91].
 * [cite_start]**Xem thời khóa biểu**: Lên lịch học, lịch giảng dạy[cite: 92].
 * [cite_start]**Điểm danh**: Theo dõi việc tham gia lớp học[cite: 93].
-* [cite_start]**Thông báo (từ giáo viên)**: Gửi thông báo tới học viên trong lớp[cite: 94].
+* [cite_start]**Thông báo (từ Giảng viên)**: Gửi thông báo tới học viên trong lớp[cite: 94].
 * [cite_start]**Phân phối tài liệu / Giao bài tập**: Gửi học liệu, bài tập đến học viên[cite: 95].
 * [cite_start]**Phân lớp**: Phân học viên vào lớp học theo khóa học đã đăng ký[cite: 96].
 
 ### [cite_start]5. Quản lý học tập (dành cho học viên) [cite: 97]
 * [cite_start]**Nộp bài**: Học viên nộp bài tập được giao[cite: 97].
-* [cite_start]**Nhận xét bài làm / Nhập điểm**: Giáo viên chấm bài và nhận xét (chức năng này có vẻ là của giáo viên, nhưng được liệt kê trong phần quản lý học tập, có thể hiểu là học viên nhận được nhận xét/điểm)[cite: 98].
+* [cite_start]**Nhận xét bài làm / Nhập điểm**: Giảng viên chấm bài và nhận xét (chức năng này có vẻ là của Giảng viên, nhưng được liệt kê trong phần quản lý học tập, có thể hiểu là học viên nhận được nhận xét/điểm)[cite: 98].
 * [cite_start]**Xem bài tập / lớp đã học**: Học viên theo dõi quá trình học tập[cite: 99].
 
 [cite_start]Bạn có thể tham khảo thêm "Sơ đồ phân rã chức năng" ở Trang 8 và phần "2.2 Phân tích chức năng trong hệ thống quản lý" từ Trang 9 đến Trang 11 của tài liệu "Nhóm-18 (1).pdf" [cite: 75, 78] để có cái nhìn tổng quan và chi tiết hơn.

@@ -72,7 +72,7 @@ UI --> Teacher: Hiển thị thông báo thành công
 deactivate UI
 
 
-== Giáo viên đăng thông báo ==
+== Giảng viên đăng thông báo ==
 Teacher -> UI: Chọn "Đăng thông báo"
 activate UI
 UI -> ClassSystem: Yêu cầu form thông báo

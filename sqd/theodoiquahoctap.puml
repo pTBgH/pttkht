@@ -23,7 +23,7 @@ activate DB
 alt Có khóa học
     DB --> CourseSystem: Trả về danh sách khóa học
     deactivate DB
-    CourseSystem --> UI: Hiển thị danh sách khóa học (tên, tiến độ, giáo viên)
+    CourseSystem --> UI: Hiển thị danh sách khóa học (tên, tiến độ, Giảng viên)
     deactivate CourseSystem
     UI --> Student: Hiển thị khóa học đang học và đã hoàn thành
 else Chưa có khóa học

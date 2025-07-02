@@ -11,9 +11,9 @@ skinparam activityEndColorBorder black
 skinparam activityBarColor black
 skinparam circledCharacterFontColor black
 
-title Sơ đồ hoạt động - Thông báo từ giáo viên
+title Sơ đồ hoạt động - Thông báo từ Giảng viên
 
-|Giáo viên|
+|Giảng viên|
 start
 :Truy cập trang\nquản lý thông báo;
 :Chọn tạo\nthông báo mới;
@@ -22,14 +22,14 @@ start
 :Hiển thị form\ntạo thông báo;
 :Lấy danh sách lớp\nđược phân công;
 
-|Giáo viên|
+|Giảng viên|
 :Chọn lớp học\nnhận thông báo;
 
 |Hệ thống|
 :Lấy danh sách học viên\ntrong lớp;
 :Hiển thị thông tin\nnhóm nhận;
 
-|Giáo viên|
+|Giảng viên|
 :Nhập tiêu đề\nthông báo;
 :Nhập nội dung\nthông báo;
 :Chọn mức độ\nưu tiên;
@@ -51,12 +51,12 @@ if (Cần đính kèm\ntệp tin?) then (có)
     :Upload tệp tin\nlên server;
   else (không)
     :Hiển thị thông báo\nlỗi tệp tin;
-    |Giáo viên|
+    |Giảng viên|
     -> Chọn tệp tin\nđể đính kèm;
   endif
 endif
 
-|Giáo viên|
+|Giảng viên|
 :Chọn thời gian\ngửi thông báo;
 
 if (Gửi ngay?) then (có)
@@ -71,7 +71,7 @@ else (Hẹn giờ)
   :Đặt lịch gửi\nthông báo;
 endif
 
-|Giáo viên|
+|Giảng viên|
 :Hiển thị thông báo\ngửi thành công;
 
 if (Muốn theo dõi\ntrạng thái đọc?) then (có)
@@ -79,7 +79,7 @@ if (Muốn theo dõi\ntrạng thái đọc?) then (có)
   :Hiển thị danh sách\nhọc viên đã đọc;
   :Hiển thị thống kê\ntỷ lệ đọc thông báo;
   
-  |Giáo viên|
+  |Giảng viên|
   :Xem chi tiết\ntrạng thái đọc;
 endif
 

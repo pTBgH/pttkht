@@ -3,7 +3,7 @@
 skinparam defaultFontSize 11
 skinparam activityFontSize 10
 skinparam swimlaneTitleFontSize 10
-skinparam maxMessageSize 175
+skinparam maxMessageSize 200
 skinparam ranksep 60
 skinparam activityStartColor black
 skinparam activityEndColor black
@@ -16,29 +16,26 @@ title Sơ đồ hoạt động - Phân lớp
 
 |Người quản lý|
 start
-:Truy cập trang\nquản lý phân lớp;
-:Chọn khóa học\ncần phân lớp;
+:Truy cập trang quản lý phân lớp;
+:Chọn khóa học cần phân lớp;
 
 |Hệ thống|
-:Lấy danh sách học viên\nđã đăng ký khóa học;
-:Lấy danh sách lớp học\ntrong khóa học;
-:Kiểm tra sức chứa\ncủa từng lớp;
+:Lấy danh sách học viên\n& lớp học;
+:Kiểm tra sức chứa lớp;
 
 |Người quản lý|
-:Xem danh sách học viên\nchưa được phân lớp;
-:Xem thông tin các\nlớp học có sẵn;
+:Xem danh sách học viên\nchưa phân lớp;
+:Xem thông tin các lớp học;
 
 |Hệ thống|
-:Hiển thị thống kê\nsố lượng học viên;
-:Hiển thị sức chứa\ncòn lại của lớp;
+:Hiển thị thống kê\n& sức chứa;
 
 |Người quản lý|
-:Chọn phương thức\nphân lớp;
+:Chọn phương thức phân lớp;
 
 if (Phương thức phân lớp?) then (Tự động)
   |Hệ thống|
-  :Áp dụng thuật toán\nphân lớp tự động;
-  
+  :Áp dụng thuật toán phân lớp tự động;
   note right
     Tiêu chí tự động:
     - Cân bằng số lượng
@@ -46,86 +43,64 @@ if (Phương thức phân lớp?) then (Tự động)
     - Thời gian đăng ký
     - Yêu cầu đặc biệt
   end note
-  
-  :Thực hiện phân lớp\ntheo thuật toán;
-  :Tạo danh sách\nphân lớp đề xuất;
-  -> \n\n\n\n\n;
+  :Tạo danh sách phân lớp đề xuất;
   
   |Người quản lý|
-  :Xem kết quả\nphân lớp tự động;
-  
-  if (Đồng ý với\nkết quả?) then (không)
-    :Chỉnh sửa\nthủ công;
+  :Xem kết quả phân lớp tự động;
+  if (Đồng ý với kết quả?) then (không)
     -> Chỉnh sửa thủ công;
   endif
-  
 else (Thủ công)
-  ' Vòng lặp phân lớp thủ công
   repeat
     |Người quản lý|
-    :Chọn học viên\ncần phân lớp;
-    :Xem thông tin\nchi tiết học viên;
-    :Chọn lớp học\nphù hợp;
-    
+    :Chọn học viên & lớp học;
     |Hệ thống|
-    :Kiểm tra sức chứa\nlớp học;
-    
-    if (Lớp còn chỗ\ntrống?) then (có)
-      :Thêm học viên\nvào lớp;
-      :Cập nhật sức chứa\nlớp học;
+    :Kiểm tra sức chứa lớp học;
+    if (Lớp còn chỗ trống?) then (có)
+      :Thêm học viên vào lớp;
+      :Cập nhật sức chứa;
     else (không)
-      :Hiển thị thông báo\nlớp đã đầy;
+      :Hiển thị thông báo lớp đã đầy;
       |Người quản lý|
-      :Chọn lớp học\nkhác;
-      -> Chọn lớp học\nphù hợp;
+      :Chọn lớp học khác;
     endif
-    
-  repeat while (Còn học viên\nchưa phân lớp?) is (có)
+  repeat while (Còn học viên chưa phân lớp?) is (có)
 endif
 
 ' Chỉnh sửa thủ công (cho cả 2 trường hợp)
 |Người quản lý|
 if (Cần chỉnh sửa?) then (có)
-  :Chọn học viên\ncần di chuyển;
-  :Chọn lớp đích\nmới;
-  
+  :Chọn học viên cần di chuyển\nvà lớp đích mới;
   |Hệ thống|
-  :Kiểm tra sức chứa\nlớp đích;
-  
-  if (Lớp đích có\nchỗ trống?) then (có)
-    :Di chuyển học viên\nsang lớp mới;
-    :Cập nhật sức chứa\ncả 2 lớp;
+  :Kiểm tra sức chứa lớp đích;
+  if (Lớp đích có chỗ trống?) then (có)
+    :Di chuyển học viên\n& cập nhật sức chứa;
   else (không)
-    :Hiển thị thông báo\nlớp đích đã đầy;
+    :Hiển thị thông báo lớp đích đã đầy;
     |Người quản lý|
-    -> Chọn lớp đích\nmới;
+    :Chọn lớp đích mới;
   endif
-  
   |Người quản lý|
   -> Cần chỉnh sửa?;
 endif
 
-:Xác nhận hoàn tất\nphân lớp;
+:Xác nhận hoàn tất phân lớp;
 
 |Hệ thống|
-:Lưu kết quả phân lớp\nvào CSDL;
-:Cập nhật trạng thái\nhọc viên;
-:Tạo danh sách lớp\ncho từng giáo viên;
-:Gửi thông báo phân lớp\nđen học viên;
-:Gửi thông báo danh sách\nlớp đến giáo viên;
+:Lưu kết quả phân lớp vào CSDL;
+:Cập nhật trạng thái học viên;
+:Tạo danh sách lớp cho giảng viên;
+:Gửi thông báo phân lớp đến học viên\n& giảng viên;
 
 |Người quản lý|
-:Hiển thị thông báo\nphân lớp thành công;
+:Hiển thị thông báo phân lớp thành công;
 
-if (Muốn xem báo cáo\nphân lớp?) then (có)
+if (Muốn xem báo cáo phân lớp?) then (có)
   |Hệ thống|
-  :Tạo báo cáo thống kê\nphân lớp;
-  :Hiển thị tỷ lệ phân bổ\ntheo từng lớp;
-  
+  :Tạo & hiển thị báo cáo thống kê phân lớp;
   |Người quản lý|
-  :Xem báo cáo\nchi tiết;
+  :Xem báo cáo chi tiết;
 endif
 
 stop
-
 @enduml

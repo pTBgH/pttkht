@@ -13,7 +13,7 @@ skinparam circledCharacterFontColor black
 
 title Sơ đồ hoạt động - Phân phối tài liệu / Giao bài tập
 
-|Giáo viên|
+|Giảng viên|
 start
 :Truy cập trang\nquản lý học liệu;
 :Chọn loại nội dung\nmuốn tạo;
@@ -22,7 +22,7 @@ if (Loại nội dung?) then (Tài liệu học tập)
   |Hệ thống|
   :Hiển thị form\ntải tài liệu;
   
-  |Giáo viên|
+  |Giảng viên|
   :Nhập tên tài liệu\nvà mô tả;
   :Chọn môn học\nvà chương;
   :Upload file tài liệu;
@@ -35,7 +35,7 @@ if (Loại nội dung?) then (Tài liệu học tập)
     :Lưu file vào\nthư viện tài liệu;
   else (không)
     :Hiển thị thông báo\nlỗi file;
-    |Giáo viên|
+    |Giảng viên|
     -> Upload file tài liệu;
     -> \n\n;
   endif
@@ -45,7 +45,7 @@ else (Bài tập)
   :Hiển thị form\ntạo bài tập;
   -> \n\n;
   
-  |Giáo viên|
+  |Giảng viên|
   :Nhập tiêu đề\nbài tập;
   :Nhập mô tả\nvà yêu cầu;
   :Đặt hạn nộp\nbài tập;
@@ -59,14 +59,14 @@ else (Bài tập)
   endif
 endif
 
-|Giáo viên|
+|Giảng viên|
 :Chọn lớp học\nnhận nội dung;
 
 |Hệ thống|
 :Lấy danh sách học viên\ntrong lớp;
 :Hiển thị danh sách\nnhận nội dung;
 
-|Giáo viên|
+|Giảng viên|
 :Xác nhận gửi\nnội dung;
 
 |Hệ thống|
@@ -84,7 +84,7 @@ endif
 
 :Lưu lịch sử\nphân phối vào CSDL;
 
-|Giáo viên|
+|Giảng viên|
 :Hiển thị thông báo\nphân phối thành công;
 
 if (Muốn theo dõi\ntiến độ?) then (có)
@@ -97,7 +97,7 @@ if (Muốn theo dõi\ntiến độ?) then (có)
     :Hiển thị danh sách\nhọc viên đã tải;
   endif
   
-  |Giáo viên|
+  |Giảng viên|
   :Xem báo cáo\nchi tiết;
 endif
 

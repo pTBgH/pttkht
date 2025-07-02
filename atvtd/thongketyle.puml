@@ -13,7 +13,7 @@ skinparam circledCharacterFontColor black
 
 title Sơ đồ hoạt động - Thống kê tỷ lệ hoàn thành bài tập
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 start
 :Đăng nhập hệ thống;
 :Truy cập trang thống kê;
@@ -28,53 +28,53 @@ else
   stop
 endif
 
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 :Chọn phạm vi thống kê;
 
 if (Toàn khóa học?) then (Có)
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 :Xác nhận;
   |Hệ thống|
   -> \n\n\n\n\n\n;
   :Lấy và tính dữ liệu toàn khóa;
   -> \n\n;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem thống kê toàn khóa;
 else if (Theo lớp?) then (Có)
-|Giáo viên/Quản trị viên|
+|Giảng viên/Quản lý|
 : Xác nhận;
 -> \n\n\n\n\n;
   |Hệ thống|
   :Lấy danh sách lớp;
   -> \n;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Chọn lớp;
     -> \n\n\n;
   |Hệ thống|
   :Tính dữ liệu theo lớp;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   -> \n\n;
   :Xem thống kê lớp;
 else
   |Hệ thống|
   :Lấy danh sách học viên;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   -> \n;
   :Chọn học viên;
   |Hệ thống|
   -> \n\n;
   :Tính dữ liệu cá nhân;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   -> \n\n;
   :Xem thống kê cá nhân;
 endif
 
 if (Xem theo thời gian?) then (Có)
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Chọn khoảng thời gian;
   |Hệ thống|
   :Lọc và tính dữ liệu;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem thống kê theo thời gian;
 endif
 
@@ -82,7 +82,7 @@ if (So sánh nhóm?) then (Có)
   :Chọn nhóm so sánh;
   |Hệ thống|
   :Tính toán và tạo biểu đồ;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem báo cáo so sánh;
 endif
 
@@ -90,7 +90,7 @@ if (Phân tích bài tập?) then (Có)
   :Chọn bài tập;
   |Hệ thống|
   :Tính tỷ lệ và độ khó;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xem phân tích;
 endif
 
@@ -98,7 +98,7 @@ if (Tạo mục tiêu?) then (Có)
   :Nhập mục tiêu và thời hạn;
   |Hệ thống|
   :Lưu và thiết lập cảnh báo;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Xác nhận mục tiêu;
 endif
 
@@ -106,7 +106,7 @@ if (Xuất báo cáo?) then (Có)
   :Chọn định dạng file;
   |Hệ thống|
   :Tạo báo cáo;
-  |Giáo viên/Quản trị viên|
+  |Giảng viên/Quản lý|
   :Tải báo cáo;
 endif
 
