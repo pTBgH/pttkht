@@ -1,0 +1,68 @@
+@startuml "Sơ đồ hoạt động - Quản lý thông tin cá nhân"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Quản lý thông tin cá nhân
+
+|Người dùng|
+start;
+:Truy cập trang\nquản lý hồ sơ cá nhân;
+
+|Hệ thống|
+
+
+:Lấy thông tin cá nhân\ntừ cơ sở dữ liệu;
+  
+|Người dùng|
+:Hiển thị form với\nthông tin hiện tại;
+:Chỉnh sửa thông tin\n(họ tên, email, số điện thoại,\nđịa chỉ, ảnh đại diện);
+:Nhấn nút cập nhật;
+  
+|Hệ thống|
+:Kiểm tra định dạng\nthông tin đầu vào;
+  
+if (Thông tin\nhợp lệ?) then (có)
+    :Kiểm tra email mới\ntrong cơ sở dữ liệu\n(nếu email thay đổi);
+    
+    if (Email đã tồn tại\nvà khác user hiện tại?) then (có)
+      |Người dùng|
+      :Hiển thị thông báo\nemail đã được sử dụng;
+      :Quay lại form\nchỉnh sửa;
+    else (không)
+      |Hệ thống|
+      :Kiểm tra quyền chỉnh sửa\ntheo vai trò;
+      
+      if (Có quyền\nchỉnh sửa?) then (có)
+        :Cập nhật thông tin\ntrong cơ sở dữ liệu;
+        :Cập nhật thời gian\nchỉnh sửa cuối;
+        :Ghi log thay đổi\nthông tin;
+        
+        |Người dùng|
+        :Hiển thị thông báo\ncập nhật thành công;
+        :Làm mới trang với\nthông tin mới;
+        
+      else (không)
+        :Hiển thị thông báo\nkhông có quyền\nchỉnh sửa thông tin này;
+      endif
+    endif
+    
+else (không)
+    |Người dùng|
+    :Hiển thị thông báo\nlỗi định dạng thông tin;
+    -> \n\n\n\n;
+    :Quay lại form\nchỉnh sửa;
+endif
+
+
+stop
+
+@enduml

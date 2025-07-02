@@ -1,0 +1,43 @@
+@startuml "Sơ đồ hoạt động - Quá trình Đăng xuất"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Quá trình Đăng xuất
+
+|Người dùng|
+start;
+:Nhấn nút\nđăng xuất;
+
+|Hệ thống|
+:Kiểm tra phiên\nđăng nhập hiện tại;
+
+if (Phiên đăng nhập\nhợp lệ?) then (có)
+  :Xóa token xác thực;
+  :Hủy phiên đăng nhập;
+  :Cập nhật thời gian\nđăng xuất;
+  :Ghi log đăng xuất;
+  
+  |Người dùng|
+  :Chuyển hướng\nđến trang đăng nhập;
+  :Hiển thị thông báo\nđăng xuất thành công;
+  
+else (không)
+  |Hệ thống|
+  :Ghi log lỗi;
+  |Người dùng|
+  :Chuyển hướng\nđến trang đăng nhập;
+  :Hiển thị thông báo\nlỗi phiên đăng nhập;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,80 @@
+@startuml "Sơ đồ hoạt động - Sửa thông tin"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Sửa thông tin
+
+|Người dùng|
+start;
+:Chọn mục cần sửa\nvà nhấn nút "Sửa";
+
+|Hệ thống|
+
+  :Xác định vai trò\nngười dùng;
+  :Kiểm tra quyền sửa\ntheo vai trò;
+  
+  if (Có quyền\nsửa?) then (có)
+    :Lấy thông tin hiện tại\ntừ cơ sở dữ liệu;
+    :Kiểm tra quyền sửa\ntrên đối tượng cụ thể;
+    
+    if (Có quyền sửa\nđối tượng này?) then (có)
+      |Người dùng|
+      :Hiển thị form sửa\nvới dữ liệu hiện tại;
+      :Chỉnh sửa thông tin\ntrong form;
+      :Nhấn nút "Cập nhật";
+      
+      |Hệ thống|
+      
+        :Kiểm tra ràng buộc\ndữ liệu mới;
+        
+        if (Dữ liệu hợp lệ\nvà không trùng lặp?) then (có)
+          :So sánh dữ liệu mới\nvới dữ liệu cũ;
+          
+          if (Có thay đổi\nthực sự?) then (có)
+            :Lưu bản sao\ndữ liệu cũ để audit;
+            :Xử lý file đính kèm\n(nếu có thay đổi);
+            :Cập nhật thông tin\ntrong cơ sở dữ liệu;
+            :Cập nhật thời gian\nsửa và người sửa;
+            :Ghi log hoạt động\nchỉnh sửa;
+            
+            |Người dùng|
+            :Hiển thị thông báo\ncập nhật thành công;
+            :Chuyển về trang\nchi tiết hoặc danh sách;
+            
+          else (không)
+            :Hiển thị thông báo\nkhông có thay đổi;
+            :Quay lại form sửa;
+          endif
+          
+        else (không)
+          :Hiển thị thông báo\nlỗi ràng buộc dữ liệu\nhoặc trùng lặp;
+          -> \n\n;
+          :Quay lại form sửa;
+        endif
+        
+      
+      
+    else (không)
+      :Hiển thị thông báo\nkhông có quyền sửa\nđối tượng này;
+      :Chuyển về trang\ndanh sách;
+    endif
+    
+  else (không)
+    :Hiển thị thông báo\nkhông có quyền sửa;
+    :Chuyển về trang\ndanh sách;
+  endif
+  
+
+
+stop
+
+@enduml

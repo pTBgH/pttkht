@@ -1,0 +1,59 @@
+@startuml "Sơ đồ hoạt động - Tạo tài khoản"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Tạo tài khoản
+
+|Người dùng|
+start;
+:Truy cập trang\ntạo tài khoản;
+:Nhập thông tin tài khoản\n(tên đăng nhập, mật khẩu,\nemail, họ tên, vai trò);
+
+|Hệ thống|
+:Kiểm tra định dạng\nthông tin đầu vào;
+
+if (Thông tin\nhợp lệ?) then (có)
+  :Kiểm tra tên đăng nhập\ntrong cơ sở dữ liệu;
+  
+  if (Tên đăng nhập\nđã tồn tại?) then (có)
+    |Người dùng|
+    :Hiển thị thông báo\ntên đăng nhập đã tồn tại;
+    :Quay lại form\ntạo tài khoản;
+  else (không)
+    |Hệ thống|
+    :Kiểm tra email\ntrong cơ sở dữ liệu;
+    
+    if (Email\nđã tồn tại?) then (có)
+      |Người dùng|
+      :Hiển thị thông báo\nemail đã được sử dụng;
+      :Quay lại form\ntạo tài khoản;
+    else (không)
+      |Hệ thống|
+      :Mã hóa mật khẩu;
+      :Lưu tài khoản\nvào cơ sở dữ liệu;
+      :Ghi log tạo tài khoản;
+      
+      |Người dùng|
+      :Hiển thị thông báo\ntạo tài khoản thành công;
+    endif
+  endif
+  
+else (không)
+  |Người dùng|
+  :Hiển thị thông báo\nlỗi định dạng;
+  -> \n\n;
+  :Quay lại form\ntạo tài khoản;
+endif
+
+stop
+
+@enduml

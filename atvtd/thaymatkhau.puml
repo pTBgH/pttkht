@@ -1,0 +1,69 @@
+@startuml "Sơ đồ hoạt động - Thay đổi mật khẩu"
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Thay đổi mật khẩu
+
+|Người dùng|
+start;
+:Truy cập trang\nthay đổi mật khẩu;
+:Nhập mật khẩu cũ\nvà mật khẩu mới;
+
+|Hệ thống|
+
+
+
+:Kiểm tra mật khẩu cũ\nvới mật khẩu hiện tại;
+  
+if (Mật khẩu cũ\nđúng?) then (có)
+  :Kiểm tra định dạng\nvà độ mạnh mật khẩu mới;
+    
+  if (Mật khẩu mới\nhợp lệ?) then (có)
+    -> \n\n;
+    :Kiểm tra mật khẩu mới\nkhác mật khẩu cũ;
+      
+    if (Mật khẩu mới\nkhác mật khẩu cũ?) then (có)
+      :Mã hóa mật khẩu mới;
+      :Cập nhật mật khẩu\ntrong cơ sở dữ liệu;
+      :Cập nhật thời gian\nthay đổi mật khẩu;
+      :Ghi log thay đổi\nmật khẩu;
+        
+      |Người dùng|
+      :Hiển thị thông báo\nthay đổi thành công;
+      :Yêu cầu đăng nhập lại\nvới mật khẩu mới;
+        
+    else (trùng)
+      :Hiển thị thông báo\nmật khẩu mới phải\nkhác mật khẩu cũ;
+      :Quay lại form\nthay đổi mật khẩu;
+    endif
+      
+  else (không)
+    -> \n\n;
+    :Hiển thị thông báo\nmật khẩu không hợp lệ;
+    -> \n\n\n;
+    :Quay lại form\nthay đổi mật khẩu;
+  endif
+    
+else (không)
+  |Hệ thống|
+  :Ghi log thất bại;
+  |Người dùng|
+  :Hiển thị thông báo\nmật khẩu cũ sai;
+  :Quay lại form\nthay đổi mật khẩu;
+endif
+  
+
+
+
+stop
+
+@enduml
