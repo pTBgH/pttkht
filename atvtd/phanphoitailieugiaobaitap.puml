@@ -1,0 +1,106 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Phân phối tài liệu / Giao bài tập
+
+|Giáo viên|
+start
+:Truy cập trang\nquản lý học liệu;
+:Chọn loại nội dung\nmuốn tạo;
+
+if (Loại nội dung?) then (Tài liệu học tập)
+  |Hệ thống|
+  :Hiển thị form\ntải tài liệu;
+  
+  |Giáo viên|
+  :Nhập tên tài liệu\nvà mô tả;
+  :Chọn môn học\nvà chương;
+  :Upload file tài liệu;
+  -> \n\n\n\n\n;
+  
+  |Hệ thống|
+  :Kiểm tra định dạng\nvà kích thước file;
+  
+  if (File hợp lệ?) then (có)
+    :Lưu file vào\nthư viện tài liệu;
+  else (không)
+    :Hiển thị thông báo\nlỗi file;
+    |Giáo viên|
+    -> Upload file tài liệu;
+    -> \n\n;
+  endif
+  
+else (Bài tập)
+  |Hệ thống|
+  :Hiển thị form\ntạo bài tập;
+  -> \n\n;
+  
+  |Giáo viên|
+  :Nhập tiêu đề\nbài tập;
+  :Nhập mô tả\nvà yêu cầu;
+  :Đặt hạn nộp\nbài tập;
+  :Đặt điểm tối đa\ncủa bài tập;
+  
+  if (Cần file đính kèm?) then (có)
+    :Upload file\nhướng dẫn/mẫu;
+    
+    |Hệ thống|
+    :Kiểm tra và lưu\nfile đính kèm;
+  endif
+endif
+
+|Giáo viên|
+:Chọn lớp học\nnhận nội dung;
+
+|Hệ thống|
+:Lấy danh sách học viên\ntrong lớp;
+:Hiển thị danh sách\nnhận nội dung;
+
+|Giáo viên|
+:Xác nhận gửi\nnội dung;
+
+|Hệ thống|
+if (Loại nội dung\nđã tạo?) then (Tài liệu)
+  :Tạo liên kết tải\ntài liệu;
+  :Gửi thông báo tài liệu\nmới đến học viên;
+  :Cập nhật thư viện\ntài liệu lớp;
+  
+else (Bài tập)
+  :Tạo bài tập trong\nhệ thống quản lý;
+  :Gửi thông báo bài tập\nmới đến học viên;
+  :Tạo không gian nộp\nbài cho học viên;
+  :Đặt lịch nhắc nhở\ntrước hạn nộp;
+endif
+
+:Lưu lịch sử\nphân phối vào CSDL;
+
+|Giáo viên|
+:Hiển thị thông báo\nphân phối thành công;
+
+if (Muốn theo dõi\ntiến độ?) then (có)
+  |Hệ thống|
+  if (Là bài tập?) then (có)
+    :Hiển thị danh sách\nhọc viên đã nộp;
+    :Hiển thị thống kê\ntỷ lệ hoàn thành;
+  else (Tài liệu)
+    :Hiển thị thống kê\nlượt tải tài liệu;
+    :Hiển thị danh sách\nhọc viên đã tải;
+  endif
+  
+  |Giáo viên|
+  :Xem báo cáo\nchi tiết;
+endif
+
+stop
+
+@enduml

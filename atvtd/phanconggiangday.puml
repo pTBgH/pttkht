@@ -1,0 +1,61 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Phân công giảng dạy
+
+|Người quản lý|
+start
+:Truy cập trang\nquản lý phân công;
+:Chọn năm học\nvà học kỳ;
+
+|Hệ thống|
+:Lấy danh sách lớp học\nchưa được phân công;
+:Lấy danh sách giáo viên\ncó sẵn (và phù hợp);
+
+|Người quản lý|
+:Xem danh sách lớp\nvà giáo viên;
+:Chọn lớp cần\nphân công;
+
+|Hệ thống|
+:Hiển thị thông tin\nchi tiết lớp học;
+:Hiển thị danh sách\ngiáo viên phù hợp;
+
+' Bắt đầu vòng lặp để chọn giáo viên và kiểm tra xung đột
+repeat
+  |Người quản lý|
+  :Chọn giáo viên\nđể phân công;
+
+  |Hệ thống|
+  :Kiểm tra xung đột\nthời gian biểu\n(dựa trên TAL);
+
+  if (Có xung đột\nthời gian?) then (có)
+    :Hiển thị cảnh báo\nxung đột thời gian;
+    |Người quản lý|
+    :Xem chi tiết\nxung đột (lớp, thời gian, giáo viên);
+    ' Luồng sẽ quay lại đầu vòng lặp để chọn giáo viên khác
+  endif
+repeat while (Còn xung đột?) is (có)
+
+|Hệ thống|
+:Lưu thông tin\nphân công vào CSDL;
+:Cập nhật trạng thái\nlớp học;
+:Gửi thông báo\ncho giáo viên được phân công;
+
+|Hệ thống|
+:Hiển thị thông báo\nphân công thành công;
+-> \n\n;
+|Người quản lý|
+:Xem tổng quan \n các phân công đã hoàn thành;
+stop
+
+@enduml

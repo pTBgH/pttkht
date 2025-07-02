@@ -1,0 +1,118 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Thống kê tỷ lệ hoàn thành bài tập
+
+|Giáo viên/Quản trị viên|
+start
+:Đăng nhập hệ thống;
+:Truy cập trang thống kê;
+
+|Hệ thống|
+:Kiểm tra quyền truy cập;
+
+if (Có quyền?) then (Có)
+  :Hiển thị trang thống kê;
+else
+  :Thông báo không có quyền;
+  stop
+endif
+
+|Giáo viên/Quản trị viên|
+:Chọn phạm vi thống kê;
+
+if (Toàn khóa học?) then (Có)
+|Giáo viên/Quản trị viên|
+:Xác nhận;
+  |Hệ thống|
+  -> \n\n\n;
+  :Lấy và tính dữ liệu toàn khóa;
+  -> \n\n;
+  |Giáo viên/Quản trị viên|
+  :Xem thống kê toàn khóa;
+else if (Theo lớp?) then (Có)
+|Giáo viên/Quản trị viên|
+: Xác nhận;
+-> \n\n;
+  |Hệ thống|
+  :Lấy danh sách lớp;
+  -> \n;
+  |Giáo viên/Quản trị viên|
+  :Chọn lớp;
+    -> \n\n\n;
+  |Hệ thống|
+  :Tính dữ liệu theo lớp;
+  |Giáo viên/Quản trị viên|
+  -> \n\n;
+  :Xem thống kê lớp;
+else
+  |Hệ thống|
+  :Lấy danh sách học viên;
+  |Giáo viên/Quản trị viên|
+  :Chọn học viên;
+  |Hệ thống|
+  -> \n\n;
+  :Tính dữ liệu cá nhân;
+  |Giáo viên/Quản trị viên|
+  -> \n\n;
+  :Xem thống kê cá nhân;
+endif
+
+if (Xem theo thời gian?) then (Có)
+  |Giáo viên/Quản trị viên|
+  :Chọn khoảng thời gian;
+  |Hệ thống|
+  :Lọc và tính dữ liệu;
+  |Giáo viên/Quản trị viên|
+  :Xem thống kê theo thời gian;
+endif
+
+if (So sánh nhóm?) then (Có)
+  :Chọn nhóm so sánh;
+  |Hệ thống|
+  :Tính toán và tạo biểu đồ;
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo so sánh;
+endif
+
+if (Phân tích bài tập?) then (Có)
+  :Chọn bài tập;
+  |Hệ thống|
+  :Tính tỷ lệ và độ khó;
+  |Giáo viên/Quản trị viên|
+  :Xem phân tích;
+endif
+
+if (Tạo mục tiêu?) then (Có)
+  :Nhập mục tiêu và thời hạn;
+  |Hệ thống|
+  :Lưu và thiết lập cảnh báo;
+  |Giáo viên/Quản trị viên|
+  :Xác nhận mục tiêu;
+endif
+
+if (Xuất báo cáo?) then (Có)
+  :Chọn định dạng file;
+  |Hệ thống|
+  :Tạo báo cáo;
+  |Giáo viên/Quản trị viên|
+  :Tải báo cáo;
+endif
+
+if (Tiếp tục xem thống kê?) then (Có)
+  -> Chọn phạm vi thống kê;
+else
+  stop
+endif
+
+@enduml

@@ -1,0 +1,75 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Xem thời khóa biểu (Giáo viên)
+
+|Giáo viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nthời khóa biểu;
+
+|Hệ thống|
+:Xác thực thông tin\ngiáo viên;
+:Lấy danh sách lớp\nđược phân công;
+
+|Giáo viên|
+:Chọn loại lịch\nmuốn xem;
+
+if (Loại lịch?) then (Lịch giảng dạy)
+  |Hệ thống|
+  :Truy vấn lịch giảng dạy\ntừ CSDL;
+  :Lấy thông tin môn học,\nlớp học, thời gian;
+
+  :Hiển thị lịch giảng dạy\ntheo tuần/tháng;
+  |Giáo viên|
+  :Xem chi tiết từng\ntiết học;
+  
+  if (Muốn xuất lịch?) then (có)
+    |Hệ thống|
+    -> \n\n\n\n;
+    :Tạo file PDF/Excel\nlịch giảng dạy;
+    -> \n\n;
+    |Giáo viên|
+    :Tải xuống file\nlịch giảng dạy;
+  endif
+  
+else (Lịch học)
+  |Hệ thống|
+  -> \n\n;
+  :Truy vấn lịch học\ncủa các lớp;
+  :Lấy thông tin thời gian\nhọc của học sinh;
+  :Hiển thị lịch học\ntheo từng lớp;
+  -> \n;
+  |Giáo viên|
+  :Xem thời gian học\ncủa học sinh;
+  
+  |Giáo viên|
+  -> \n\n;
+  :Chọn lớp cụ thể\nđể xem chi tiết;
+  
+  |Hệ thống|
+  :Hiển thị lịch học\nchi tiết của lớp;
+  :Hiển thị danh sách\nhọc sinh trong lớp;
+  
+  |Giáo viên|
+  if (Muốn xuất lịch\nlớp?) then (có)
+    -> \n\n;
+    |Hệ thống|
+    :Tạo file PDF/Excel\nlịch học lớp;
+    |Giáo viên|
+    :Tải xuống file\nlịch học lớp;
+  endif
+endif
+
+stop
+@enduml

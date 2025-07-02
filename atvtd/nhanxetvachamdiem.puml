@@ -1,0 +1,116 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Nhận xét bài làm / Nhập điểm
+
+|Giáo viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nquản lý bài tập;
+
+|Hệ thống|
+:Lấy danh sách bài tập\nđã tạo;
+:Lọc bài tập có\nbài nộp chưa chấm;
+
+|Giáo viên|
+:Xem danh sách\nbài tập;
+:Chọn bài tập\nmuốn chấm;
+
+|Hệ thống|
+:Lấy danh sách học viên\nnộp bài;
+:Sắp xếp theo\nthời gian nộp;
+
+|Giáo viên|
+:Xem danh sách\nbài đã nộp;
+:Chọn bài làm\ncủa học viên;
+
+|Hệ thống|
+:Hiển thị nội dung\nbài làm;
+:Hiển thị thông tin\nnộp bài;
+
+note right
+  Thông tin bài làm:
+  - Tên học viên
+  - Thời gian nộp
+  - Nội dung bài làm
+  - Tệp đính kèm
+  - Trạng thái nộp muộn
+end note
+
+|Giáo viên|
+:Đọc và đánh giá\nbài làm;
+
+if (Bài làm hợp lệ?) then (có)
+  :Nhập điểm số\ncho bài làm;
+  
+  |Hệ thống|
+  :Kiểm tra điểm\nhợp lệ;
+  
+  if (Điểm trong\nkhoảng cho phép?) then (có)
+    :Lưu điểm số;
+  else (không)
+    :Hiển thị thông báo\nlỗi điểm số;
+    |Giáo viên|
+    -> Nhập điểm số\ncho bài làm;
+  endif
+  
+  |Giáo viên|
+  if (Có nhận xét\nbài làm?) then (có)
+    :Nhập nhận xét\nchi tiết;
+    
+    if (Cần đính kèm\ntệp phản hồi?) then (có)
+      :Chọn tệp tin\nphản hồi;
+      
+      |Hệ thống|
+      :Kiểm tra tệp tin\nhợp lệ;
+      
+      if (Tệp hợp lệ?) then (có)
+        :Upload tệp\nphản hồi;
+      else (không)
+        :Hiển thị lỗi\ntệp tin;
+        |Giáo viên|
+        -> Chọn tệp tin\nphản hồi;
+      endif
+    endif
+  endif
+  
+  if (Cần áp dụng\ntrừ điểm nộp muộn?) then (có)
+    |Hệ thống|
+    :Tính toán điểm\nsau khi trừ;
+    :Cập nhật điểm\ncuối cùng;
+  endif
+  
+else (không hợp lệ)
+  :Đánh dấu bài làm\nkhông đạt;
+  :Nhập lý do\nkhông đạt;
+endif
+
+|Giáo viên|
+:Xem lại thông tin\nchấm bài;
+:Xác nhận hoàn thành\nchấm bài;
+
+|Hệ thống|
+:Lưu kết quả\nchấm bài;
+:Cập nhật trạng thái\nbài làm;
+:Tạo thông báo\ncho học viên;
+
+if (Gửi email\nthông báo?) then (có)
+  :Gửi email kết quả\ncho học viên;
+endif
+
+:Cập nhật thống kê\nlớp học;
+
+
+stop
+
+@enduml

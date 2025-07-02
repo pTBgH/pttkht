@@ -1,0 +1,78 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Xem bài tập
+
+|Học viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nbài tập;
+
+|Hệ thống|
+:Lấy danh sách\nbài tập được giao;
+
+|Học viên|
+:Xem danh sách\nbài tập;
+
+note right
+  Danh sách bài tập:
+  - Chưa nộp
+  - Đã nộp
+  - Đã chấm
+  - Quá hạn
+end note
+
+:Chọn bài tập\nmuốn xem;
+
+|Hệ thống|
+:Hiển thị thông tin\nbài tập;
+
+|Học viên|
+:Xem yêu cầu\nbài tập;
+
+note left
+  Thông tin bài tập:
+  - Tiêu đề
+  - Yêu cầu
+  - Hạn nộp
+  - Điểm tối đa
+end note
+
+if (Đã nộp bài?) then (có)
+  |Hệ thống|
+  :Hiển thị bài đã nộp;
+  
+  |Học viên|
+  :Xem bài làm\nđã nộp;
+  
+  if (Đã có điểm?) then (có)
+    :Xem điểm và\nnhận xét;
+  else (chưa)
+    :Hiển thị trạng thái\nchờ chấm;
+  endif
+  
+else (chưa)
+  :Hiển thị trạng thái\nchưa nộp;
+  
+  if (Còn hạn nộp?) then (có)
+    if (Muốn nộp bài?) then (có)
+      :Chuyển đến\ntrang nộp bài;
+    endif
+  else (không)
+    :Hiển thị\nquá hạn nộp;
+  endif
+endif
+
+stop
+
+@enduml

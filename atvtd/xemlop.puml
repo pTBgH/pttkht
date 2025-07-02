@@ -1,0 +1,184 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Xem lớp đã học
+
+|Học viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nlớp học của tôi;
+
+|Hệ thống|
+:Lấy danh sách lớp\nhọc viên tham gia;
+:Phân loại theo\ntrạng thái lớp;
+
+|Học viên|
+:Xem danh sách\nlớp đã học;
+
+note right
+  Danh sách lớp học:
+  - Đang học
+  - Đã hoàn thành
+  - Tạm dừng
+  - Đã hủy
+end note
+
+if (Muốn lọc lớp\ntheo trạng thái?) then (có)
+  :Chọn bộ lọc\ntrạng thái;
+  
+  |Hệ thống|
+  :Lọc danh sách\ntheo yêu cầu;
+  
+  |Học viên|
+  :Xem danh sách\nđã lọc;
+endif
+
+if (Muốn sắp xếp\ntheo tiêu chí?) then (có)
+  :Chọn tiêu chí\nsắp xếp;
+  
+  |Hệ thống|
+  :Sắp xếp danh sách\ntheo yêu cầu;
+  
+  |Học viên|
+  :Xem danh sách\nđã sắp xếp;
+endif
+
+:Chọn lớp học\nmuốn xem;
+
+|Hệ thống|
+:Lấy thông tin\nchi tiết lớp học;
+:Tính toán tiến độ\nhọc tập;
+
+|Học viên|
+:Xem thông tin\nlớp học;
+
+note left
+  Thông tin lớp học:
+  - Tên lớp học
+  - Giáo viên phụ trách
+  - Thời gian bắt đầu/kết thúc
+  - Trạng thái lớp
+  - Số học viên
+  - Mô tả lớp học
+end note
+
+if (Muốn xem tiến độ\nhọc tập?) then (có)
+  |Hệ thống|
+  :Tính toán tiến độ\ncá nhân trong lớp;
+  
+  |Học viên|
+  :Xem báo cáo\ntiến độ;
+  
+  note right
+    Tiến độ học tập:
+    - Tỷ lệ hoàn thành bài tập
+    - Điểm trung bình
+    - Số buổi học đã tham gia
+    - Xếp hạng trong lớp
+    - Thời gian học tích lũy
+  end note
+endif
+
+if (Muốn xem danh sách\nbài tập của lớp?) then (có)
+  |Hệ thống|
+  :Lấy danh sách bài tập\ncủa lớp;
+  :Kiểm tra trạng thái\nnộp bài;
+  
+  |Học viên|
+  :Xem tổng quan\nbài tập lớp;
+  
+  note left
+    Tổng quan bài tập:
+    - Tổng số bài tập
+    - Số bài đã nộp
+    - Số bài chưa nộp
+    - Số bài quá hạn
+    - Điểm trung bình
+  end note
+  
+  if (Muốn xem chi tiết\nbài tập cụ thể?) then (có)
+    :Chuyển đến trang\nxem bài tập;
+    
+    note right
+      Chuyển hướng đến
+      chức năng "Xem bài tập"
+    end note
+  endif
+endif
+
+if (Muốn xem lịch trình\nlớp học?) then (có)
+  |Hệ thống|
+  :Lấy lịch trình\nbuổi học;
+  :Kiểm tra tình trạng\ntham gia;
+  
+  |Học viên|
+  :Xem lịch trình\nchi tiết;
+  
+  note right
+    Lịch trình lớp học:
+    - Ngày giờ học
+    - Chủ đề buổi học
+    - Tài liệu học tập
+    - Trạng thái tham gia
+    - Ghi chú buổi học
+  end note
+  
+  if (Muốn xem tài liệu\nbuổi học?) then (có)
+    :Chọn buổi học\nmuốn xem;
+    
+    |Hệ thống|
+    :Lấy tài liệu\nbuổi học;
+    
+    |Học viên|
+    :Tải xuống/xem\ntài liệu;
+  endif
+endif
+
+if (Muốn xem thông tin\ngiáo viên?) then (có)
+  |Hệ thống|
+  :Lấy thông tin\ngiáo viên;
+  
+  |Học viên|
+  :Xem hồ sơ\ngiáo viên;
+  
+  note left
+    Thông tin giáo viên:
+    - Tên giáo viên
+    - Chuyên môn
+    - Kinh nghiệm
+    - Thông tin liên hệ
+    - Đánh giá từ học viên
+  end note
+  
+  if (Muốn đánh giá\ngiáo viên/lớp học?) then (có)
+    |Hệ thống|
+    :Kiểm tra quyền\nđánh giá;
+    
+    if (Được phép\nđánh giá?) then (có)
+      |Học viên|
+      :Nhập đánh giá\nvà nhận xét;
+      
+      |Hệ thống|
+      :Lưu đánh giá\nvào hệ thống;
+      
+      |Học viên|
+      :Xác nhận\nđánh giá;
+    else (không)
+      :Thông báo không thể\nđánh giá;
+    endif
+  endif
+endif
+
+stop
+
+@enduml

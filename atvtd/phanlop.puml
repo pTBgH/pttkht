@@ -1,0 +1,131 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 11
+skinparam activityFontSize 10
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 175
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+skinparam wrapWidth 100
+
+title Sơ đồ hoạt động - Phân lớp
+
+|Người quản lý|
+start
+:Truy cập trang\nquản lý phân lớp;
+:Chọn khóa học\ncần phân lớp;
+
+|Hệ thống|
+:Lấy danh sách học viên\nđã đăng ký khóa học;
+:Lấy danh sách lớp học\ntrong khóa học;
+:Kiểm tra sức chứa\ncủa từng lớp;
+
+|Người quản lý|
+:Xem danh sách học viên\nchưa được phân lớp;
+:Xem thông tin các\nlớp học có sẵn;
+
+|Hệ thống|
+:Hiển thị thống kê\nsố lượng học viên;
+:Hiển thị sức chứa\ncòn lại của lớp;
+
+|Người quản lý|
+:Chọn phương thức\nphân lớp;
+
+if (Phương thức phân lớp?) then (Tự động)
+  |Hệ thống|
+  :Áp dụng thuật toán\nphân lớp tự động;
+  
+  note right
+    Tiêu chí tự động:
+    - Cân bằng số lượng
+    - Trình độ học viên
+    - Thời gian đăng ký
+    - Yêu cầu đặc biệt
+  end note
+  
+  :Thực hiện phân lớp\ntheo thuật toán;
+  :Tạo danh sách\nphân lớp đề xuất;
+  -> \n\n\n\n\n;
+  
+  |Người quản lý|
+  :Xem kết quả\nphân lớp tự động;
+  
+  if (Đồng ý với\nkết quả?) then (không)
+    :Chỉnh sửa\nthủ công;
+    -> Chỉnh sửa thủ công;
+  endif
+  
+else (Thủ công)
+  ' Vòng lặp phân lớp thủ công
+  repeat
+    |Người quản lý|
+    :Chọn học viên\ncần phân lớp;
+    :Xem thông tin\nchi tiết học viên;
+    :Chọn lớp học\nphù hợp;
+    
+    |Hệ thống|
+    :Kiểm tra sức chứa\nlớp học;
+    
+    if (Lớp còn chỗ\ntrống?) then (có)
+      :Thêm học viên\nvào lớp;
+      :Cập nhật sức chứa\nlớp học;
+    else (không)
+      :Hiển thị thông báo\nlớp đã đầy;
+      |Người quản lý|
+      :Chọn lớp học\nkhác;
+      -> Chọn lớp học\nphù hợp;
+    endif
+    
+  repeat while (Còn học viên\nchưa phân lớp?) is (có)
+endif
+
+' Chỉnh sửa thủ công (cho cả 2 trường hợp)
+|Người quản lý|
+if (Cần chỉnh sửa?) then (có)
+  :Chọn học viên\ncần di chuyển;
+  :Chọn lớp đích\nmới;
+  
+  |Hệ thống|
+  :Kiểm tra sức chứa\nlớp đích;
+  
+  if (Lớp đích có\nchỗ trống?) then (có)
+    :Di chuyển học viên\nsang lớp mới;
+    :Cập nhật sức chứa\ncả 2 lớp;
+  else (không)
+    :Hiển thị thông báo\nlớp đích đã đầy;
+    |Người quản lý|
+    -> Chọn lớp đích\nmới;
+  endif
+  
+  |Người quản lý|
+  -> Cần chỉnh sửa?;
+endif
+
+:Xác nhận hoàn tất\nphân lớp;
+
+|Hệ thống|
+:Lưu kết quả phân lớp\nvào CSDL;
+:Cập nhật trạng thái\nhọc viên;
+:Tạo danh sách lớp\ncho từng giáo viên;
+:Gửi thông báo phân lớp\nđen học viên;
+:Gửi thông báo danh sách\nlớp đến giáo viên;
+
+|Người quản lý|
+:Hiển thị thông báo\nphân lớp thành công;
+
+if (Muốn xem báo cáo\nphân lớp?) then (có)
+  |Hệ thống|
+  :Tạo báo cáo thống kê\nphân lớp;
+  :Hiển thị tỷ lệ phân bổ\ntheo từng lớp;
+  
+  |Người quản lý|
+  :Xem báo cáo\nchi tiết;
+endif
+
+stop
+
+@enduml

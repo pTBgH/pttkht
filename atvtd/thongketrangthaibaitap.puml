@@ -1,0 +1,152 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Thống kê trạng thái bài tập theo lớp / cá nhân
+
+|Giáo viên/Quản trị viên|
+start
+:Truy cập trang\nthống kê bài tập;
+
+|Hệ thống|
+:Kiểm tra quyền\ntruy cập thống kê;
+
+if (Có quyền truy cập?) then (có)
+  :Hiển thị trang\nthống kê trạng thái;
+else (không)
+  :Hiển thị thông báo\nkhông có quyền;
+  stop
+endif
+
+|Giáo viên/Quản trị viên|
+:Chọn loại thống kê\nmuốn xem;
+
+if (Thống kê theo lớp\nhay cá nhân?) then (theo lớp)
+  |Hệ thống|
+  :Lấy danh sách\nlớp học;
+  -> \n;
+  
+  |Giáo viên/Quản trị viên|
+  :Chọn lớp học\nmuốn thống kê;
+  
+  |Hệ thống|
+  :Lấy danh sách bài tập\ncủa lớp;
+  :Thống kê trạng thái\nnộp bài theo lớp;
+  
+  |Giáo viên/Quản trị viên|
+  -> \n\n;
+  :Xem thống kê\ntrạng thái lớp;
+  
+  note right
+    Thống kê trạng thái lớp:
+    - Tổng số bài tập
+    - Số bài đã nộp
+    - Số bài chưa nộp
+    - Số bài quá hạn
+    - Tỷ lệ hoàn thành
+    - Biểu đồ trạng thái
+  end note
+  
+else (cá nhân)
+  |Hệ thống|
+  :Lấy danh sách\nhọc viên;
+  
+  |Giáo viên/Quản trị viên|
+  :Chọn học viên\nmuốn thống kê;
+  
+  |Hệ thống|
+  :Lấy thông tin bài tập\ncủa học viên;
+  :Thống kê trạng thái\nnộp bài cá nhân;
+  
+  |Giáo viên/Quản trị viên|
+  -> \n\n\n\n;
+  :Xem thống kê\ntrạng thái cá nhân;
+  
+  note left
+    Thống kê cá nhân:
+    - Tiến độ từng bài tập
+    - Lịch sử nộp bài
+    - Bài tập còn thiếu
+    - Xu hướng học tập
+    - Cảnh báo quá hạn
+  end note
+endif
+
+|Giáo viên/Quản trị viên|
+if (Muốn xem chi tiết\nbài tập cụ thể?) then (có)
+  :Chọn bài tập\nmuốn xem;
+  
+  |Hệ thống|
+  :Lấy thông tin\nchi tiết bài tập;
+  :Thống kê trạng thái\nnộp bài tất cả học viên;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem trạng thái\nbài tập chi tiết;
+  
+  note right
+    Chi tiết bài tập:
+    - Danh sách đã nộp
+    - Danh sách chưa nộp
+    - Thời gian nộp
+    - Trạng thái chấm bài
+    - Nhận xét tổng quan
+  end note
+endif
+
+if (Muốn lọc theo\ntrạng thái?) then (có)
+  :Chọn trạng thái\nmuốn lọc;
+  
+  |Hệ thống|
+  :Lọc dữ liệu\ntheo trạng thái;
+  :Cập nhật thống kê;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem thống kê\nđã lọc;
+  
+  note left
+    Các trạng thái:
+    - Chưa nộp
+    - Đã nộp chưa chấm
+    - Đã chấm
+    - Quá hạn nộp
+    - Nộp muộn
+  end note
+endif
+
+if (Muốn gửi nhắc nhở?) then (có)
+  |Hệ thống|
+  :Lấy danh sách học viên\nchưa nộp bài;
+  
+  |Giáo viên/Quản trị viên|
+  :Soạn nội dung\nnhắc nhở;
+  :Chọn học viên\nmuốn gửi;
+  
+  |Hệ thống|
+  :Gửi email/thông báo\nnhắc nhở;
+  
+  |Giáo viên/Quản trị viên|
+  :Xác nhận đã gửi\nnhắc nhở;
+endif
+
+if (Muốn xuất\nthống kê?) then (có)
+  :Chọn định dạng\nxuất file;
+  
+  |Hệ thống|
+  :Tạo file thống kê\ntheo định dạng;
+  
+  |Giáo viên/Quản trị viên|
+  :Tải xuống\nfile thống kê;
+endif
+
+stop
+
+@enduml

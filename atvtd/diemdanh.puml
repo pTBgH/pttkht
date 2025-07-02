@@ -1,0 +1,85 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Điểm danh
+
+|Giáo viên|
+start
+:Truy cập trang\nquản lý lớp học;
+:Chọn lớp học\ncần điểm danh;
+
+|Hệ thống|
+:Lấy danh sách học viên\ntrong lớp;
+:Kiểm tra lịch học\nhiện tại;
+
+|Giáo viên|
+:Xem danh sách\nhọc viên;
+:Bắt đầu điểm danh\ncho buổi học;
+
+|Hệ thống|
+:Tạo phiên điểm danh\nmới;
+:Hiển thị form\nđiểm danh;
+
+' Vòng lặp điểm danh cho từng học viên
+repeat
+  |Giáo viên|
+  :Chọn học viên\ntiếp theo;
+  :Đánh dấu trạng thái\ntham gia;
+  
+  note right
+    Trạng thái:
+    - Có mặt
+    - Vắng mặt
+    - Vắng có phép
+    - Đi muộn
+  end note
+  
+  |Hệ thống|
+  :Lưu trạng thái\nđiểm danh;
+  
+repeat while (Còn học viên\nchưa điểm danh?) is (có)
+
+|Giáo viên|
+:Xem lại danh sách\nđiểm danh;
+
+if (Cần chỉnh sửa?) then (có)
+  :Chọn học viên\ncần chỉnh sửa;
+  :Cập nhật trạng thái\nmới;
+  
+  |Hệ thống|
+  :Cập nhật thông tin\nđiểm danh;
+  
+  |Giáo viên|
+  -> Xem lại danh sách\nđiểm danh;
+else (không)
+  :Xác nhận hoàn thành\nđiểm danh;
+endif
+
+|Hệ thống|
+:Lưu phiên điểm danh\nvào CSDL;
+:Cập nhật thống kê\ntham gia của học viên;
+:Gửi thông báo đến\nhọc viên vắng mặt;
+
+|Giáo viên|
+:Hiển thị thông báo\nđiểm danh thành công;
+
+if (Muốn xem báo cáo\nđiểm danh?) then (có)
+  |Hệ thống|
+  :Tạo báo cáo\nthống kế điểm danh;
+  |Giáo viên|
+  :Xem báo cáo\nchi tiết;
+endif
+
+stop
+
+@enduml

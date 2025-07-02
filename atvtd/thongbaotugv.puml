@@ -1,0 +1,88 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Thông báo từ giáo viên
+
+|Giáo viên|
+start
+:Truy cập trang\nquản lý thông báo;
+:Chọn tạo\nthông báo mới;
+
+|Hệ thống|
+:Hiển thị form\ntạo thông báo;
+:Lấy danh sách lớp\nđược phân công;
+
+|Giáo viên|
+:Chọn lớp học\nnhận thông báo;
+
+|Hệ thống|
+:Lấy danh sách học viên\ntrong lớp;
+:Hiển thị thông tin\nnhóm nhận;
+
+|Giáo viên|
+:Nhập tiêu đề\nthông báo;
+:Nhập nội dung\nthông báo;
+:Chọn mức độ\nưu tiên;
+
+note right
+  Mức độ ưu tiên:
+  - Thông thường
+  - Quan trọng
+  - Khẩn cấp
+end note
+
+if (Cần đính kèm\ntệp tin?) then (có)
+  :Chọn tệp tin\nđể đính kèm;
+  
+  |Hệ thống|
+  :Kiểm tra định dạng\nvà kích thước tệp;
+  
+  if (Tệp hợp lệ?) then (có)
+    :Upload tệp tin\nlên server;
+  else (không)
+    :Hiển thị thông báo\nlỗi tệp tin;
+    |Giáo viên|
+    -> Chọn tệp tin\nđể đính kèm;
+  endif
+endif
+
+|Giáo viên|
+:Chọn thời gian\ngửi thông báo;
+
+if (Gửi ngay?) then (có)
+  |Hệ thống|
+  :Lưu thông báo\nvào CSDL;
+  :Gửi thông báo đến\ntất cả học viên;
+  :Gửi email/SMS\nnếu cần thiết;
+  
+else (Hẹn giờ)
+  |Hệ thống|
+  :Lưu thông báo\nvào hàng đợi;
+  :Đặt lịch gửi\nthông báo;
+endif
+
+|Giáo viên|
+:Hiển thị thông báo\ngửi thành công;
+
+if (Muốn theo dõi\ntrạng thái đọc?) then (có)
+  |Hệ thống|
+  :Hiển thị danh sách\nhọc viên đã đọc;
+  :Hiển thị thống kê\ntỷ lệ đọc thông báo;
+  
+  |Giáo viên|
+  :Xem chi tiết\ntrạng thái đọc;
+endif
+
+stop
+
+@enduml

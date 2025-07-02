@@ -1,0 +1,120 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Nộp bài
+
+|Học viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nbài tập;
+
+|Hệ thống|
+:Lấy danh sách bài tập\nđược giao;
+:Kiểm tra hạn nộp\ncủa từng bài tập;
+
+|Học viên|
+:Xem danh sách\nbài tập;
+:Chọn bài tập\nmuốn nộp;
+
+|Hệ thống|
+:Hiển thị chi tiết\nbài tập;
+:Kiểm tra trạng thái\nnộp bài;
+
+if (Đã nộp bài\ntrước đó?) then (có)
+  :Hiển thị bài đã nộp\nvà thông tin nộp;
+  
+  |Học viên|
+  if (Muốn nộp lại?) then (có)
+    :Chọn nộp bài\nmới;
+  else (không)
+    :Xem chi tiết\nbài đã nộp;
+    stop
+  endif
+else (chưa)
+  :Hiển thị form\nnộp bài;
+endif
+
+|Học viên|
+:Kiểm tra hạn nộp\nbài tập;
+
+|Hệ thống|
+if (Còn trong\nhạn nộp?) then (có)
+  :Cho phép nộp bài;
+else (không)
+  :Hiển thị thông báo\nquá hạn nộp;
+  
+  if (Cho phép nộp\nmuộn?) then (có)
+    :Hiển thị cảnh báo\nnộp muộn;
+    |Học viên|
+    if (Vẫn muốn\nnộp?) then (không)
+      stop
+    endif
+  else (không)
+    :Từ chối nộp bài;
+    |Học viên|
+    :Hiển thị thông báo\nkhông thể nộp;
+    stop
+  endif
+endif
+
+|Học viên|
+:Nhập tiêu đề\nbài làm;
+:Nhập nội dung\nbài làm;
+
+if (Cần đính kèm\ntệp tin?) then (có)
+  :Chọn tệp tin\nđể đính kèm;
+  
+  |Hệ thống|
+  :Kiểm tra định dạng\nvà kích thước tệp;
+  
+  if (Tệp hợp lệ?) then (có)
+    :Upload tệp tin\nlên server;
+  else (không)
+    :Hiển thị thông báo\nlỗi tệp tin;
+    |Học viên|
+    -> Chọn tệp tin\nđể đính kèm;
+  endif
+endif
+
+|Học viên|
+:Xem lại nội dung\nbài làm;
+:Xác nhận nộp bài;
+
+|Hệ thống|
+:Lưu bài làm\nvào CSDL;
+:Cập nhật trạng thái\nnộp bài;
+:Ghi nhận thời gian\nnộp bài;
+
+if (Nộp muộn?) then (có)
+  :Đánh dấu trạng thái\nnộp muộn;
+  :Tính toán mức\ntrừ điểm (nếu có);
+endif
+
+:Tạo thông báo\ncho giáo viên;
+:Gửi email xác nhận\ncho học viên;
+
+|Học viên|
+:Hiển thị thông báo\nnộp bài thành công;
+:Hiển thị thông tin\nnộp bài;
+
+note right
+  Thông tin nộp bài:
+  - Thời gian nộp
+  - Trạng thái nộp
+  - Tệp đính kèm
+  - Số lần nộp lại
+end note
+
+stop
+
+@enduml

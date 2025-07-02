@@ -1,0 +1,126 @@
+@startuml
+!theme plain
+skinparam defaultFontSize 10
+skinparam activityFontSize 9
+skinparam swimlaneTitleFontSize 10
+skinparam maxMessageSize 150
+skinparam ranksep 60
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityEndColorBorder black
+skinparam activityBarColor black
+skinparam circledCharacterFontColor black
+
+title Sơ đồ hoạt động - Báo cáo điểm theo lớp / cá nhân
+
+|Giáo viên/Quản trị viên|
+start
+:Đăng nhập vào\nhệ thống;
+:Truy cập trang\nbáo cáo thống kê;
+
+|Hệ thống|
+:Kiểm tra quyền\ntruy cập báo cáo;
+
+if (Có quyền truy cập?) then (có)
+  :Hiển thị trang\nbáo cáo điểm;
+else (không)
+  :Hiển thị thông báo\nkhông có quyền;
+  stop
+endif
+
+|Giáo viên/Quản trị viên|
+:Chọn loại báo cáo\nmuốn xem;
+
+if (Báo cáo theo lớp\nhay cá nhân?) then (theo lớp)
+  |Hệ thống|
+  :Lấy danh sách\nlớp học;
+  -> \n;
+  |Giáo viên/Quản trị viên|
+  :Chọn lớp học\nmuốn báo cáo;
+  -> \n\n;
+  
+  |Hệ thống|
+  :Lấy danh sách\nhọc viên trong lớp;
+  :Tính toán điểm\ntrung bình lớp;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo\nđiểm theo lớp;
+  
+  note right
+    Báo cáo điểm lớp:
+    - Điểm trung bình lớp
+    - Số học viên đạt/không đạt
+    - Phân bố điểm
+    - Học viên xuất sắc
+    - Học viên cần hỗ trợ
+  end note
+  
+else (cá nhân)
+  |Hệ thống|
+  :Lấy danh sách\nhọc viên;
+  
+  |Giáo viên/Quản trị viên|
+  :Chọn học viên\nmuốn báo cáo;
+  
+  |Hệ thống|
+  :Lấy thông tin điểm\ncủa học viên;
+  :Tính toán thống kê\ncá nhân;
+  
+  |Giáo viên/Quản trị viên|
+  -> \n\n\n\n\n\n;
+  :Xem báo cáo\nđiểm cá nhân;
+  
+  note left
+    Báo cáo điểm cá nhân:
+    - Điểm từng bài tập
+    - Điểm trung bình
+    - Xu hướng tiến bộ
+    - So sánh với lớp
+    - Nhận xét chi tiết
+  end note
+endif
+
+|Giáo viên/Quản trị viên|
+if (Muốn lọc theo\nthời gian?) then (có)
+  :Chọn khoảng\nthời gian;
+  
+  |Hệ thống|
+  :Lọc dữ liệu\ntheo thời gian;
+  :Cập nhật báo cáo;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo\nđã lọc;
+endif
+
+if (Muốn lọc theo\nbài tập?) then (có)
+  :Chọn bài tập\ncụ thể;
+  
+  |Hệ thống|
+  :Lọc dữ liệu\ntheo bài tập;
+  :Cập nhật báo cáo;
+  
+  |Giáo viên/Quản trị viên|
+  :Xem báo cáo\ntheo bài tập;
+endif
+
+if (Muốn xuất\nbáo cáo?) then (có)
+  :Chọn định dạng\nxuất file;
+  
+  |Hệ thống|
+  :Tạo file báo cáo\ntheo định dạng;
+  
+  |Giáo viên/Quản trị viên|
+  :Tải xuống\nfile báo cáo;
+  
+  note right
+    Định dạng xuất:
+    - PDF
+    - Excel
+    - CSV
+    - Word
+  end note
+endif
+
+stop
+
+@enduml
