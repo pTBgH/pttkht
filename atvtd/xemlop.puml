@@ -1,4 +1,4 @@
-@startuml
+@startuml "Sơ đồ hoạt động - Xem lớp đã học"
 !theme plain
 skinparam defaultFontSize 10
 skinparam activityFontSize 9
