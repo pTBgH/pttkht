@@ -110,10 +110,6 @@ if (Xuất báo cáo?) then (Có)
   :Tải báo cáo;
 endif
 
-if (Tiếp tục xem thống kê?) then (Có)
-  -> Chọn phạm vi thống kê;
-else
-  stop
-endif
+stop
 
 @enduml
