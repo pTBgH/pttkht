@@ -122,21 +122,6 @@ if (Muốn lọc theo\ntrạng thái?) then (có)
   end note
 endif
 
-if (Muốn gửi nhắc nhở?) then (có)
-  |Hệ thống|
-  :Lấy danh sách học viên\nchưa nộp bài;
-  
-  |Giảng viên/Quản lý|
-  :Soạn nội dung\nnhắc nhở;
-  :Chọn học viên\nmuốn gửi;
-  
-  |Hệ thống|
-  :Gửi email/thông báo\nnhắc nhở;
-  
-  |Giảng viên/Quản lý|
-  :Xác nhận đã gửi\nnhắc nhở;
-endif
-
 if (Muốn xuất\nthống kê?) then (có)
   :Chọn định dạng\nxuất file;
   

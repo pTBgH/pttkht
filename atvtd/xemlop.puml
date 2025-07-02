@@ -89,33 +89,6 @@ if (Muốn xem tiến độ\nhọc tập?) then (có)
   end note
 endif
 
-if (Muốn xem danh sách\nbài tập của lớp?) then (có)
-  |Hệ thống|
-  :Lấy danh sách bài tập\ncủa lớp;
-  :Kiểm tra trạng thái\nnộp bài;
-  
-  |Học viên|
-  :Xem tổng quan\nbài tập lớp;
-  
-  note left
-    Tổng quan bài tập:
-    - Tổng số bài tập
-    - Số bài đã nộp
-    - Số bài chưa nộp
-    - Số bài quá hạn
-    - Điểm trung bình
-  end note
-  
-  if (Muốn xem chi tiết\nbài tập cụ thể?) then (có)
-    :Chuyển đến trang\nxem bài tập;
-    
-    note right
-      Chuyển hướng đến
-      chức năng "Xem bài tập"
-    end note
-  endif
-endif
-
 if (Muốn xem lịch trình\nlớp học?) then (có)
   |Hệ thống|
   :Lấy lịch trình\nbuổi học;
@@ -132,16 +105,7 @@ if (Muốn xem lịch trình\nlớp học?) then (có)
     - Trạng thái tham gia
     - Ghi chú buổi học
   end note
-  
-  if (Muốn xem tài liệu\nbuổi học?) then (có)
-    :Chọn buổi học\nmuốn xem;
-    
-    |Hệ thống|
-    :Lấy tài liệu\nbuổi học;
-    
-    |Học viên|
-    :Tải xuống/xem\ntài liệu;
-  endif
+
 endif
 
 if (Muốn xem thông tin\nGiảng viên?) then (có)
@@ -159,24 +123,6 @@ if (Muốn xem thông tin\nGiảng viên?) then (có)
     - Thông tin liên hệ
     - Đánh giá từ học viên
   end note
-  
-  if (Muốn đánh giá\nGiảng viên/lớp học?) then (có)
-    |Hệ thống|
-    :Kiểm tra quyền\nđánh giá;
-    
-    if (Được phép\nđánh giá?) then (có)
-      |Học viên|
-      :Nhập đánh giá\nvà nhận xét;
-      
-      |Hệ thống|
-      :Lưu đánh giá\nvào hệ thống;
-      
-      |Học viên|
-      :Xác nhận\nđánh giá;
-    else (không)
-      :Thông báo không thể\nđánh giá;
-    endif
-  endif
 endif
 
 stop

@@ -78,28 +78,12 @@ if (Xem theo thời gian?) then (Có)
   :Xem thống kê theo thời gian;
 endif
 
-if (So sánh nhóm?) then (Có)
-  :Chọn nhóm so sánh;
-  |Hệ thống|
-  :Tính toán và tạo biểu đồ;
-  |Giảng viên/Quản lý|
-  :Xem báo cáo so sánh;
-endif
-
 if (Phân tích bài tập?) then (Có)
   :Chọn bài tập;
   |Hệ thống|
   :Tính tỷ lệ và độ khó;
   |Giảng viên/Quản lý|
   :Xem phân tích;
-endif
-
-if (Tạo mục tiêu?) then (Có)
-  :Nhập mục tiêu và thời hạn;
-  |Hệ thống|
-  :Lưu và thiết lập cảnh báo;
-  |Giảng viên/Quản lý|
-  :Xác nhận mục tiêu;
 endif
 
 if (Xuất báo cáo?) then (Có)
